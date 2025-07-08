@@ -24,3 +24,12 @@ if (! defined('ABSPATH')) {
 
 // Include admin logic
 require_once __DIR__ . '/admin.php';
+
+/*
+<?php
+require_once plugin_dir_path(__FILE__) . 'helpers/palettes.php';
+require_once plugin_dir_path(__FILE__) . 'helpers/divs.php';
+require_once plugin_dir_path(__FILE__) . 'helpers/options.php';
+require_once plugin_dir_path(__FILE__) . 'helpers/css.php';
+require_once plugin_dir_path(__FILE__) . 'helpers/debug.php';
+require_once plugin_dir_path(__FILE__) . 'helpers/misc.php';

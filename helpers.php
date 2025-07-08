@@ -15,7 +15,7 @@
  * @return array $style_titles Array of style titles.
  * @return array $style_all_files Array of all style files in json format for cycling colour selection.
  */
-function cycle_colours_get_style_files()
+/*function cycle_colours_get_style_files()
 {
     // get directory path for styles and styles/colors directories
     $get_style_directory = get_template_directory() . '/styles/';
@@ -39,6 +39,74 @@ function cycle_colours_get_style_files()
     }, $style_all_files);
     error_log(json_encode($style_all_files));
     return $style_all_files;
+}*/
+
+
+/**
+ * Get all .json palette file paths from parent and child theme directories.
+ *
+ * @return array Associative array of [filename => full path].
+ */
+function cycle_colours_get_palette_file_paths()
+{
+    $parent_style_dir = get_template_directory() . '/styles/';
+    $parent_colors_dir = get_template_directory() . '/styles/colors/';
+    $child_style_dir = get_stylesheet_directory() . '/styles/';
+    $child_colors_dir = get_stylesheet_directory() . '/styles/colors/';
+
+    $get_files = function ($dir) {
+        $result = [];
+        if (is_dir($dir)) {
+            foreach (glob($dir . '*.json') as $file) {
+                $result[basename($file)] = $file;
+            }
+        }
+        return $result;
+    };
+
+    $parent_files = array_merge(
+        $get_files($parent_style_dir),
+        $get_files($parent_colors_dir)
+    );
+    $child_files = array_merge(
+        $get_files($child_style_dir),
+        $get_files($child_colors_dir)
+    );
+
+    // Child files overwrite parent files with the same name
+    return array_merge($parent_files, $child_files);
+}
+
+/**
+ * Read and decode all palette files.
+ *
+ * @param array $file_paths Associative array of [filename => full path].
+ * @return array Array of decoded JSON contents.
+ */
+function cycle_colours_decode_palette_files($file_paths)
+{
+    return array_map(function ($file) {
+        return json_decode(file_get_contents($file), true);
+    }, $file_paths);
+}
+
+/**
+ * Main function to get all palette files as decoded arrays.
+ *
+ * @return array Array of all style files in json format for cycling colour selection.
+ */
+function cycle_colours_get_style_files()
+{
+    $file_paths = cycle_colours_get_palette_file_paths();
+
+    if (empty($file_paths)) {
+        add_action('admin_notices', function () {
+            echo '<div class="error notice"><p>No colour palettes found in the theme or child theme. Please ensure your theme.json file contains a valid "color.palette" section.</p></div>';
+        });
+        return [];
+    }
+
+    return cycle_colours_decode_palette_files($file_paths);
 }
 
 /**

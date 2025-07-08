@@ -284,6 +284,12 @@ function render_cycle_colours_page()
     }
     echo '</div>'; // end of cycle-colours-info
 
+
+    //include __DIR__ . '/forms/palettes-form.php';
+    //include __DIR__ . '/forms/divs-form.php';
+    //include __DIR__ . '/forms/settings-form.php';
+
+
     // Display the palettes settings
     echo '<div id="palettes-settings" style="display:' . ($toggle === 'palettes' ? 'block' : 'none') . ';">';
 

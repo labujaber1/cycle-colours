@@ -1,0 +1,5 @@
+List of directory content
+
+- Images
+- css files
+- js files

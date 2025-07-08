@@ -1,0 +1,7 @@
+List of directory content
+
+Files used in the development of the plugin
+
+- flowchart
+- todo
+- parts development

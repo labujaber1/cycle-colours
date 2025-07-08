@@ -1,0 +1,15 @@
+List of directory content
+
+- All forms for the plugin instead of pages to toggle via a dropdown list
+
+- Palettes schedule
+- Div schedule
+- Manage schedules
+
+TO BE CREATED IN VERSION 2
+
+- Create a palette/style file and save to directory.
+Split into two parts and then merge and save.
+ --> Create colour palettes
+ --> Create styles for wp core elements
+ 
