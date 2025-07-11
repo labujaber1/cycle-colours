@@ -383,7 +383,6 @@ function cycle_colours_delete_div_temp_data()
     delete_option('cycle_colours_div_class');
     delete_option('cycle_colours_div_style');
     delete_option('cycle_colours_custom_colours');
-    //delete_option('cycle_colours_div_interval');
 }
 
 /**

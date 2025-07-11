@@ -17,8 +17,6 @@
  *  
  */
 
-define('CYCLE_COLOURS_PLUGIN_PATH', plugin_dir_path(__FILE__));
-
 // Exit if accessed directly.
 if (! defined('ABSPATH')) {
     exit;
@@ -26,10 +24,12 @@ if (! defined('ABSPATH')) {
 
 // Include admin logic
 require_once __DIR__ . '/admin.php';
+
+/*
+<?php
 require_once plugin_dir_path(__FILE__) . 'helpers/palettes.php';
 require_once plugin_dir_path(__FILE__) . 'helpers/divs.php';
-require_once plugin_dir_path(__FILE__) . 'helpers/get-set-reset.php';
-require_once plugin_dir_path(__FILE__) . 'helpers/hooks.php';
-require_once plugin_dir_path(__FILE__) . 'helpers/inline-css.php';
-require_once plugin_dir_path(__FILE__) . 'helpers/scheduling-events.php';
+require_once plugin_dir_path(__FILE__) . 'helpers/options.php';
+require_once plugin_dir_path(__FILE__) . 'helpers/css.php';
 require_once plugin_dir_path(__FILE__) . 'helpers/debug.php';
+require_once plugin_dir_path(__FILE__) . 'helpers/misc.php';

@@ -10,4 +10,5 @@ they represent.
 - get-set-reset (need a different name)
 - debugging
 - producing inline-css
-- misc (anything else)
+- hooks
+- scheduling events related

@@ -11,17 +11,14 @@ if (! defined('WP_UNINSTALL_PLUGIN')) {
     exit;
 }
 
-// Removing all options created by Cycle Colours plugin
-delete_option('cycle_colours_toggle');
-delete_option('cycle_colours_palettes');
-delete_option('cycle_colours_palettes_interval');
-delete_option('cycle_colours_div_array');
-delete_option('cycle_colours_div_class');
-delete_option('cycle_colours_div_style');
-delete_option('cycle_colours_div_interval');
-delete_option('cycle_colours_custom_colours');
-delete_option('cycle_colours_current_palette_index');
-
-// Removing the scheduled events
-wp_clear_scheduled_hook('cycle_colours_div_task');
-wp_clear_scheduled_hook('cycle_colours_palettes_task');
+// Removing all options and cron jobs created by Cycle Colours plugin
+// No custom tables used
+try {
+    cycle_colours_reset_palettes();
+    wp_clear_scheduled_hook('cycle_colours_palettes_task');
+    cycle_colours_delete_all_divs();
+    delete_option('cycle_colours_toggle');
+    cycle_colours_intervals_housekeeping();
+} catch (\Throwable $th) {
+    update_option('cycle_colours_uninstall_error', $th->getMessage());
+}
