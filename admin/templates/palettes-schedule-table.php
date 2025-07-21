@@ -22,11 +22,11 @@ if (isset($palette_timestamp) && $palette_timestamp > time()) {
         <select name="schedule_new_palette_interval" style="font-size:0.75rem;">';
     foreach (cycle_colours_display_interval_options() as $option_value => $label) {
         $selected = ($palette_interval === $option_value) ? 'selected' : '';
-        echo '<option value="' . esc_attr($option_value) . '" ' . $selected . '>' . esc_html($label) . '</option>';
+        echo '<option value="' . esc_attr($option_value) . '" ' . esc_attr($selected) . '>' . esc_html($label) . '</option>';
     }
     echo '</select>
     </td>
-    <td>' . esc_html(empty($palette_timestamp) ? '' : date('H:i:s d-m-Y ', $palette_timestamp)) . '</td>';
+    <td>' . esc_html(empty($palette_timestamp) ? '' : gmdate('H:i:s d-m-Y ', $palette_timestamp)) . '</td>';
 }
 echo '</tr>
     </table>';

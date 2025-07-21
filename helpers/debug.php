@@ -13,7 +13,7 @@ function error_log_file()
     }
     return $log_file;
 }
-//error_log('Message to print in the log file.' . PHP_EOL, 3, error_log_file()); // For debugging purposes
+//error_log('Message to print in the log file.', 'cycle-colours' . PHP_EOL, 3, error_log_file()); // For debugging purposes
 
 /**
  * Prints the inline CSS for each group of divs by their interval settings.
@@ -30,7 +30,7 @@ function cycle_colours_print_css()
     foreach ($interval_groups as $interval => $group) {
         if ($interval !== '0') {
             $css = cycle_colours_create_inline_css($group);
-            echo '<p>Inline CSS for each group: Interval ' . $interval . ' minute(s) --> ' . $css . '</p>';
+            echo '<p>Inline CSS for each group: Interval ' . esc_html($interval) . ' minute(s) --> ' . esc_html($css) . '</p>';
         }
     }
 }
@@ -71,7 +71,7 @@ function display_debug_info($di_toggle, $di_palettes, $di_palettes_interval, $di
     //echo '<p>Interval groups array: ' . esc_html(print_r($arr, true)) . '</p>';
     echo esc_html(cycle_colours_print_css());
     $di_timestamp_palettes = wp_next_scheduled('cycle_colours_palettes_task');
-    echo '<p>Next Scheduled Palettes Task: ' . esc_html(empty($di_timestamp_palettes) ? 'None' : date('H:i:s d-m-Y', $di_timestamp_palettes)) . '</p>';
+    echo '<p>Next Scheduled Palettes Task: ' . esc_html(empty($di_timestamp_palettes) ? 'None' : gmdate('H:i:s d-m-Y', $di_timestamp_palettes)) . '</p>';
     foreach ($di_div_array as $di_class => $di_styles) {
         foreach ($di_styles as $di_style => $data) {
             echo '<p style="text-decoration: underline;"><strong>Div Class: ' . esc_html($di_class) . '</strong></p>';

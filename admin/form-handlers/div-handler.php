@@ -1,9 +1,6 @@
 <?php
 
 if (isset($_POST['submit_div'])) {
-    //display popup checking message 
-
-
     // Get all the selected colours from all inputs type=color min-2 max-4 saved in the hidden input,
     // and store them in an array.
     // Use the JSON array from the hidden input
@@ -17,7 +14,7 @@ if (isset($_POST['submit_div'])) {
         $custom_colours_array = array_values($custom_colours_array);
     }
     if (sizeof($custom_colours_array) < 2 || sizeof($custom_colours_array) > 4) {
-        $error_message .= __('Save aborted, number of selected colours must be between 2 and 4.' . PHP_EOL);
+        $error_message .= __('Save aborted, number of selected colours must be between 2 and 4.', 'cycle-colours') . PHP_EOL;
     } else {
         update_option('cycle_colours_toggle', 'div');
         update_option('cycle_colours_div_interval', sanitize_text_field($_POST['div_interval']));
@@ -44,7 +41,7 @@ if (isset($_POST['submit_div'])) {
             $current_colour = $custom_colours_array[0]
         );
         cycle_colours_rerun_scheduled_events();
-        $message .= __('Div settings saved.' . PHP_EOL);
+        $message .= __('Div settings saved.', 'cycle-colours') . PHP_EOL;
         // Clearing temp data
         cycle_colours_delete_div_temp_data();
     }

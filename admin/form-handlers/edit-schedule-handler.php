@@ -6,7 +6,7 @@ if (
     update_option('cycle_colours_palettes_interval', $new_palette_interval);
     cycle_colours_schedule_event_palettes();
     update_option('cycle_colours_toggle', 'schedules');
-    $message .= __('Palette schedule interval updated.', 'cycle-colours');
+    $message .= __('Palette schedule interval updated.', 'cycle-colours') . PHP_EOL;
 }
 
 // Process div schedule edit if checkbox selected
@@ -26,9 +26,11 @@ if (
             ];
             $result = cycle_colours_change_div_interval($class_style_array, $new_interval);
             if ($result) {
-                $message .= __('Interval updated for ' . esc_html($div_class) . ' / ' . esc_html($div_style) . ' with interval: ' . $new_interval . '.', 'cycle-colours');
+                /* translators: %1$s: div class, %2$s: style, %3$s: interval */
+                $message .= sprintf(__('Interval updated for %1$s / %2$s with interval: %3$s.', 'cycle-colours'), esc_html($div_class), esc_html($div_style), esc_html($new_interval)) . PHP_EOL;
             } else {
-                $error_message .= __('Failed to update interval for ' . esc_html($div_class) . ' / ' . esc_html($div_style) . '.', 'cycle-colours');
+                /* translators: %1$s: div class, %2$s: style */
+                $error_message .= sprintf(__('Failed to update interval for %1$s / %2$s.', 'cycle-colours'), esc_html($div_class), esc_html($div_style)) . PHP_EOL;
             }
         }
     }

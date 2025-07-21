@@ -91,13 +91,13 @@ function render_cycle_colours_page()
     if (isset($_POST['reset_palettes'])) {
         cycle_colours_reset_palettes();
         //$div_array = get_option('cycle_colours_div_array', []);
-        $message .= __('Palettes have been reset.' . PHP_EOL);
+        $message .= __('Palettes have been reset.', 'cycle-colours') . PHP_EOL;
     }
     // Reset the settings to default values
     if (isset($_POST['delete_all_divs'])) {
         cycle_colours_delete_all_divs();
         //$div_array = get_option('cycle_colours_div_array', []);
-        $message .= __('Div settings have been reset.' . PHP_EOL);
+        $message .= __('Div settings have been reset.', 'cycle-colours') . PHP_EOL;
     }
 
     // Process class deletion

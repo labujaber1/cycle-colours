@@ -28,11 +28,11 @@ foreach ($interval_order as $dinterval) {
                     <td>' . esc_html($div_interval) . '</td>
                     <td><select name="schedule_new_div_interval[' . esc_attr($key) . ']" style="font-size:0.75rem;">';
             foreach (cycle_colours_display_interval_options() as $option_value => $label) {
-                $selected = ($div_interval === $option_value) ? 'selected' : '';
-                echo '<option value="' . esc_attr($option_value) . '" ' . $selected . '>' . esc_html($label) . '</option>';
+                $is_selected = ($div_interval === $option_value) ? 'selected' : '';
+                echo '<option value="' . esc_attr($option_value) . '" ' . esc_attr($is_selected) . '>' . esc_html($label) . '</option>';
             }
             echo '</select></td>
-                <td>' . esc_html(empty($div_timestamp) ? 'Not Scheduled.' : date('H:i:s d-m-Y ', $div_timestamp)) . '</td>
+                <td>' . esc_html(empty($div_timestamp) ? 'Not Scheduled.' : gmdate('H:i:s d-m-Y ', $div_timestamp)) . '</td>
                 </tr>';
         }
     }

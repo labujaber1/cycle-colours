@@ -78,19 +78,27 @@ function render_cycle_colours_page()
     }
     $message = '';
     $error_message = '';
+    // Nonce field for security
+    wp_nonce_field('cycle_colours_nonce', 'cycle_colours_nonce');
     // Check if form has been submitted
     if (isset($_POST['submit_palettes'])) {
 
+        // Nonce field for security
+        wp_nonce_field('cycle_colours_nonce', 'cycle_colours_nonce');
+        if (empty($_POST['palettes'])) {
+            $error_message .= __('No palettes selected. Please select at least 2 palettes.', 'cycle-colours') . PHP_EOL;
+            continue;
+        }
         // Check length of the selected palettes array for min 2 and max 4
         if (count($_POST['palettes']) < 2 || count($_POST['palettes']) > 4) {
-            $error_message .= __('Number of selected palettes must be between 2 and 4.' . PHP_EOL);
+            $error_message .= __('Number of selected palettes must be between 2 and 4.', 'cycle-colours') . PHP_EOL;
         } else {
             // Create for first time and update the settings from the form data on submit
             update_option('cycle_colours_toggle', 'palettes');
             update_option('cycle_colours_palettes', $_POST['palettes'] ?? []);
             update_option('cycle_colours_palettes_interval', sanitize_text_field($_POST['palettes_interval']));
 
-            $message .= __('Palettes settings saved.' . PHP_EOL);
+            $message .= __('Palettes settings saved.', 'cycle-colours') . PHP_EOL;
 
             cycle_colours_schedule_event_palettes();
         }
@@ -110,7 +118,7 @@ function render_cycle_colours_page()
             $custom_colours_array = array_values($custom_colours_array);
         }
         if (sizeof($custom_colours_array) < 2 || sizeof($custom_colours_array) > 4) {
-            $error_message .= __('Save aborted, number of selected colours must be between 2 and 4.' . PHP_EOL);
+            $error_message .= __('Save aborted, number of selected colours must be between 2 and 4.', 'cycle-colours') . PHP_EOL;
         } else {
             update_option('cycle_colours_toggle', 'div');
             update_option('cycle_colours_div_interval', sanitize_text_field($_POST['div_interval']));
@@ -137,7 +145,7 @@ function render_cycle_colours_page()
                 $current_colour = $custom_colours_array[0]
             );
             cycle_colours_rerun_scheduled_events();
-            $message .= __('Div settings saved.' . PHP_EOL);
+            $message .= __('Div settings saved.', 'cycle-colours') . PHP_EOL;
             // Clearing temp data
             cycle_colours_delete_div_temp_data();
         }
@@ -148,13 +156,13 @@ function render_cycle_colours_page()
     if (isset($_POST['reset_palettes'])) {
         cycle_colours_reset_palettes();
         $div_array = get_option('cycle_colours_div_array', []);
-        $message .= __('Palettes have been reset.' . PHP_EOL);
+        $message .= __('Palettes have been reset.', 'cycle-colours') . PHP_EOL;
     }
     // Reset the settings to default values
     if (isset($_POST['delete_all_divs'])) {
         cycle_colours_delete_all_divs();
         $div_array = get_option('cycle_colours_div_array', []);
-        $message .= __('Div settings have been reset.' . PHP_EOL);
+        $message .= __('Div settings have been reset.', 'cycle-colours') . PHP_EOL;
     }
 
     // Process class deletion
@@ -162,9 +170,11 @@ function render_cycle_colours_page()
         $div_class = sanitize_text_field($_POST['delete_class_select']);
         $ans_class = cycle_colours_delete_div_class($div_class);
         if ($ans_class) {
-            $message .= __('Div class ' . esc_html($div_class) . ' and all styles has been deleted.' . PHP_EOL);
+            /* translators: %s: div class */
+            $message .= sprintf(__('Div class %s and all styles has been deleted.', 'cycle-colours'), esc_html($div_class)) . PHP_EOL;
         } else {
-            $error_message .= __('Failed to delete div class ' . esc_html($div_class) . ' due to an error.' . PHP_EOL);
+            /* translators: %s: div class */
+            $error_message .= sprintf(__('Failed to delete div class %s due to an error.', 'cycle-colours'), esc_html($div_class)) . PHP_EOL;
         }
         cycle_colours_rerun_scheduled_events();
     }
@@ -182,23 +192,27 @@ function render_cycle_colours_page()
             if (isset($_POST['delete_class_style_btn'])) {
                 $ans_style = cycle_colours_delete_div_class_style($class_style_array);
                 if ($ans_style) {
-                    $message .= __('The style ' . esc_html($style) . ' for the class ' . esc_html($div_class) . ' has been deleted.
-                    If this is the last style for the class, the class will also be deleted.' . PHP_EOL);
+                    /* translators: %1$s: style, %2$s: div class */
+                    $message .= sprintf(__('The style %1$s for the class %2$s has been deleted.
+                    If this is the last style for the class, the class will also be deleted.', 'cycle-colours'), esc_html($style), esc_html($div_class)) . PHP_EOL;
                 } else {
-                    $error_message .= __('Failed to delete div class ' . esc_html($div_class) . ' and style ' . esc_html($style) . ' due to an error.' . PHP_EOL);
+                    /* translators: %1$s: style, %2$s: div class */
+                    $error_message .= sprintf(__('Failed to delete div class %2$s and style %1$s due to an error.', 'cycle-colours'), esc_html($style), esc_html($div_class)) . PHP_EOL;
                 }
             }
             if (isset($_POST['stop_schedule_event_btn'])) {
                 $ans_style = cycle_colours_change_div_interval($class_style_array, 0);
                 if ($ans_style) {
-                    $message .= __('The interval for the style ' . esc_html($style) . ' for the class ' . esc_html($div_class) . ' has been stopped.' . PHP_EOL);
+                    /* translators: %1$s: style, %2$s: div class */
+                    $message .= sprintf(__('The interval for the style %1$s for the class %2$s has been stopped.',  'cycle-colours'), esc_html($style), esc_html($div_class)) . PHP_EOL;
                 } else {
-                    $error_message .= __('Failed to stop interval for div class ' . esc_html($div_class) . ' and style ' . esc_html($style) . ' due to an error. Please try again.' . PHP_EOL);
+                    /* translators: %1$s: style, %2$s: div class */
+                    $error_message .= sprintf(__('Failed to stop interval for div class %2$s and style %1$s due to an error. Please try again.', 'cycle-colours'), esc_html($style), esc_html($div_class)) . PHP_EOL;
                 }
                 cycle_colours_rerun_scheduled_events(); // Rerun the scheduled events to update the divs
             }
         } else {
-            $error_message .= __('Invalid class and style selection.' . PHP_EOL);
+            $error_message .= __('Invalid class and style selection.', 'cycle-colours') . PHP_EOL;
         }
     }
 
@@ -230,9 +244,11 @@ function render_cycle_colours_page()
                 ];
                 $result = cycle_colours_change_div_interval($class_style_array, $new_interval);
                 if ($result) {
-                    $message .= __('Interval updated for ' . esc_html($div_class) . ' / ' . esc_html($div_style) . ' with interval: ' . $new_interval . '.', 'cycle-colours');
+                    /* translators: %1$s: div class, %2$s: style, %3$s: interval */
+                    $message .= sprintf(__('Interval updated for %1$s / %2$s with interval: %3$s.', 'cycle-colours'), esc_html($div_class), esc_html($div_style), esc_html($new_interval)) . PHP_EOL;
                 } else {
-                    $error_message .= __('Failed to update interval for ' . esc_html($div_class) . ' / ' . esc_html($div_style) . '.', 'cycle-colours');
+                    /* translators: %1$s: div class, %2$s: style */
+                    $error_message .= sprintf(__('Failed to update interval for %1$s / %2$s.', 'cycle-colours'), esc_html($div_class), esc_html($div_style)) . PHP_EOL;
                 }
             }
         }
@@ -306,14 +322,14 @@ function render_cycle_colours_page()
     $palette_titles = cycle_colours_get_theme_style_titles();
 
     if (empty($theme_palettes)) {
-        $error_message .= __('No colour palettes found in the themes styles or styles/colour. Please ensure your "palette.json" files are in these folders for the plugin to find.' . PHP_EOL);
+        $error_message .= __('No colour palettes found in the themes styles or styles/colour. Please ensure your "palette.json" files are in these folders for the plugin to find.', 'cycle-colours') . PHP_EOL;
     } else {
         // Display the palette names in a dropdown list    
         echo '<select name="palettes[]" id ="palette-select" multiple="multiple" size="10" title="Hold Ctrl to select multiple">';
         // Get the palette names and display them in a dropdown list
         foreach ($palette_titles as $slug => $name) {
-            $selected = in_array($slug, $palettes) ? 'selected' : '';
-            echo "<option value='" . esc_attr($slug) . "' $selected>" . esc_html($name) . "</option>";
+            $is_selected = in_array($slug, $palettes) ? 'selected' : '';
+            echo "<option value='" . esc_attr($slug) . "'" . esc_attr($is_selected) . ">" . esc_html($name) . "</option>";
             echo '<div class="cycle-colours-palette-preview" style="display: block;">';
             // Display each palette colours successively in a row block
             foreach ($theme_palettes[$slug]['settings']['color']['palette'] as $colour) {
@@ -329,8 +345,8 @@ function render_cycle_colours_page()
     echo '<label>Choose the required interval for the changes to happen:</label><br>';
     echo '<select name="palettes_interval">';
     foreach (cycle_colours_display_interval_options() as $value => $label) {
-        $selected = $value === $palettes_interval ? 'selected' : '';
-        echo "<option value='" . esc_attr($value) . "' $selected>" . esc_html($label) . "</option>";
+        $is_selected = ($value === $palettes_interval) ? 'selected' : '';
+        echo "<option value='" . esc_attr($value) . "'" . esc_attr($is_selected) . ">" . esc_html($label) . "</option>";
     }
     echo '</select><br><br>';
     // Nonce field for security
@@ -343,7 +359,7 @@ function render_cycle_colours_page()
     // Display the next scheduled task time
     echo '<h3>Palette Scheduled Task</h3>';
     $palette_timestamp = wp_next_scheduled('cycle_colours_palettes_task');
-    echo '<p>Next Scheduled Palettes Task: ' . esc_html(empty($palette_timestamp) ? 'None' : date('H:i:s d-m-Y ', $palette_timestamp)) . '</p>';
+    echo '<p>Next Scheduled Palettes Task: ' . esc_html(empty($palette_timestamp) ? 'None' : gmdate('H:i:s d-m-Y ', $palette_timestamp)) . '</p>';
 
     echo '</form>'; // End of palettes form 
     echo '</div>'; // End of palettes settings
@@ -367,8 +383,8 @@ function render_cycle_colours_page()
     echo '<div class="cycle-colours-custom-colours">';
     for ($i = 0; $i < 4; $i++) {
         $colour = $custom_colours[$i] ?? '#000000';
-        echo '<label for="cycle-colours-custom-colours' . $i . '">Colour ' . ($i + 1) . '</label>';
-        echo '<input type="color" name="custom_colours[]" id="custom-colour' . $i . '" value="' . esc_attr($colour) . '" style="margin: 0.25rem 0.5rem;"><span id="selected-colour' . $i . '" style="display: none; margin-left: 0.5rem;">selected</span><br>';
+        echo '<label for="cycle-colours-custom-colours' . esc_attr($i) . '">Colour ' . (esc_attr($i) + 1) . '</label>';
+        echo '<input type="color" name="custom_colours[]" id="custom-colour' . esc_attr($i) . '" value="' . esc_attr($colour) . '" style="margin: 0.25rem 0.5rem;"><span id="selected-colour' . esc_attr($i) . '" style="display: none; margin-left: 0.5rem;">selected</span><br>';
     }
     echo '<button type="button" id="reset-colours-btn" style="margin:0.5rem;">Reset Colours</button>';
     echo '<input type="hidden" name="custom_colours_json" id="custom-colours-json" value="">';
@@ -378,8 +394,8 @@ function render_cycle_colours_page()
     echo '<label>Choose the required interval for the changes to happen:</label><br>';
     echo '<select name="div_interval">';
     foreach (cycle_colours_display_interval_options() as $value => $label) {
-        $selected = $value === $div_interval ? 'selected' : '';
-        echo "<option value='" . esc_attr($value) . "' $selected>" . esc_html($label) . "</option>";
+        $is_selected = ($value === $div_interval) ? 'selected' : '';
+        echo "<option value='" . esc_attr($value) . "'" . esc_attr($is_selected) . ">" . esc_html($label) . "</option>";
     }
     echo '</select><br><br>';
 
@@ -402,7 +418,7 @@ function render_cycle_colours_page()
     echo '<select name="delete_class_select" id="divs-select-class" style="margin-top: 1rem;">';
     foreach ($div_array as $div_class  => $styles) {
         $selected_class = $value === $div_class ? 'selected' : '';
-        echo "<option value='" . esc_attr($div_class) . "' $selected_class>" . esc_html($div_class) . "</option>";
+        echo "<option value='" . esc_attr($div_class) . "'" . esc_attr($selected_class) . ">" . esc_html($div_class) . "</option>";
     }
 
     echo '</select>';
@@ -418,7 +434,7 @@ function render_cycle_colours_page()
     foreach ($div_array as $div_class  => $styles) {
         foreach ($styles as $style => $data) {
             $selected_class_style = $value === "$div_class|$style" ? 'selected' : '';
-            echo "<option value='" . esc_attr("$div_class|$style") . "' $selected_class_style>" . esc_html("$div_class --> $style") . "</option>";
+            echo "<option value='" . esc_attr("$div_class|$style") . "'" . esc_attr($selected_class_style) . ">" . esc_html("$div_class --> $style") . "</option>";
         }
     }
     echo '</select>';
@@ -436,7 +452,7 @@ function render_cycle_colours_page()
     }
     foreach ($arr as $interval => $hook) {
         $timestamp = wp_next_scheduled($hook);
-        echo '<p>Next Scheduled Task for div_task_' . $interval . ' at ' . esc_html(empty($timestamp) ? '-> : Not Scheduled.' : date('H:i:s d-m-Y ', $timestamp)) . '</p>';
+        echo '<p>Next Scheduled Task for div_task_' . esc_html($interval) . ' at ' . esc_html(empty($timestamp) ? '-> : Not Scheduled.' : gmdate('H:i:s d-m-Y ', esc_html($timestamp))) . '</p>';
     }
     echo '</div>'; // End of schedule display
     echo '</div>'; // End of div settings
@@ -471,12 +487,12 @@ function render_cycle_colours_page()
     <td>
         <select name="schedule_new_palette_interval" style="font-size:0.75rem;">';
     foreach (cycle_colours_display_interval_options() as $option_value => $label) {
-        $selected = ($palette_interval === $option_value) ? 'selected' : '';
-        echo '<option value="' . esc_attr($option_value) . '" ' . $selected . '>' . esc_html($label) . '</option>';
+        $is_selected = ($palette_interval === $option_value) ? 'selected' : '';
+        echo '<option value="' . esc_attr($option_value) . '" ' . esc_attr($is_selected) . '>' . esc_html($label) . '</option>';
     }
     echo '</select>
     </td>
-    <td>' . esc_html(empty($palette_timestamp) ? 'Not Scheduled.' : date('H:i:s d-m-Y ', $palette_timestamp)) . '</td>
+    <td>' . esc_html(empty($palette_timestamp) ? 'Not Scheduled.' : gmdate('H:i:s d-m-Y ', esc_html($palette_timestamp))) . '</td>
     </tr>
     </table>';
     echo '<div class="cycle-colours-buttons-wrap">';
@@ -517,10 +533,10 @@ function render_cycle_colours_page()
                     <td><select name="schedule_new_div_interval[' . esc_attr($key) . ']" style="font-size:0.75rem;">';
                 foreach (cycle_colours_display_interval_options() as $option_value => $label) {
                     $selected = ($div_interval === $option_value) ? 'selected' : '';
-                    echo '<option value="' . esc_attr($option_value) . '" ' . $selected . '>' . esc_html($label) . '</option>';
+                    echo '<option value="' . esc_attr($option_value) . '" ' . esc_attr($selected) . '>' . esc_html($label) . '</option>';
                 }
                 echo '</select></td>
-                <td>' . esc_html(empty($div_timestamp) ? 'Not Scheduled.' : date('H:i:s d-m-Y ', $div_timestamp)) . '</td>
+                <td>' . esc_html(empty($div_timestamp) ? 'Not Scheduled.' : gmdate('H:i:s d-m-Y ', $div_timestamp)) . '</td>
                 </tr>';
             }
         }

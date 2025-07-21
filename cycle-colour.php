@@ -9,8 +9,7 @@
  * Author URI: https://github.com/labujaber1
  * License: MIT
  * License URI: https://opensource.org/licenses/MIT
- * Text Domain: cycle-colour
- * Domain Path: /languages
+ * Text Domain: cycle-colours
  * Requires at least: 5.0
  * Requires PHP: 7.0
  * Tested up to: 6.3

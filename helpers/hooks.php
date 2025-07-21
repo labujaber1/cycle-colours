@@ -99,7 +99,7 @@ add_action('admin_notices', function () {
 });
 
 add_action('admin_notices', function () {
-    $message = get_transient('cycle_colours_deactivation_message');
+    $message = get_transient('cycle_colours_deactivation_message', 'cycle-colours') . PHP_EOL;
     if ($message) {
         // Display success message
         echo '<div class="notice notice-success is-dismissible">
