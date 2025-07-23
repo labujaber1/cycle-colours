@@ -23,6 +23,29 @@ flowchart TD
 ```
 <br><br>
 
+# Palette processing 
+
+1. Get file paths for all .json colour palette files in parent and child themes. Return array of paths
+2. Overwrite parent with child paths if duplicates. Update array
+3. Check and delete duplicate file names and empty files. Update array
+
+## Need content of files
+
+1. 
+2. Decode each .json file from each key in array of paths and write contents to array
+3. 
+ 
+## Need titles of files
+
+1. Get file names to display in drop down list for user selection
+2. For each title selected save to array
+3. For each in array using current index get content data and merge with current theme file whilst removing previous data content.
+4.  
+
+## Display each palettes colour chart
+
+1. Using array of titles and array of all contents display colours in a colour bar for each palette in drop down list.
+    
 # Notes for multiple div changes
 
 ## Add css to header as inline style using wp_add_inline_style()

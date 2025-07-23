@@ -86,7 +86,7 @@ add_action('wp_enqueue_scripts', function () {
 });
 
 /**
- * Display error message on deactivation
+ * Display an error message on deactivation
  */
 add_action('admin_notices', function () {
     $error = get_option('cycle_colours_uninstall_error');
@@ -105,7 +105,7 @@ add_action('admin_notices', function () {
         echo '<div class="notice notice-success is-dismissible">
                 <p>Plugin deactivated successfully, temp data removed and cron jobs stopped.</p>
               </div>';
-        // Delete transient so message doesn't show again
-        delete_transient('my_plugin_deactivation_message');
+        // Delete transient to prevent repeated display
+        delete_transient('cycle_colours_deactivation_message');
     }
 });

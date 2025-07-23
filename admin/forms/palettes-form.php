@@ -12,7 +12,7 @@ echo '<p>The plugin will create a scheduled event to cycle through the selected 
 echo '<label for="palettes-select">Select Palettes (min 2, max 4):</label><br>';
 
 // Prepare arrays from theme files 
-$theme_palettes = cycle_colours_get_theme_style_palettes(); // contains all theme palette arrays in full
+$theme_palettes = cycle_colours_get_style_files_data(); // contains all theme palette arrays in full
 $palette_titles = cycle_colours_get_theme_style_titles();
 
 if (empty($theme_palettes)) {

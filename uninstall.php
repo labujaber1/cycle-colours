@@ -15,6 +15,9 @@ if (! defined('WP_UNINSTALL_PLUGIN')) {
 // No custom tables used
 try {
     cycle_colours_reset_palettes();
+    delete_option('cycle_colours_style_files_data');
+    delete_option('cycle_colours_style_files');
+    delete_option('cycle_colours_style_current_palette');
     wp_clear_scheduled_hook('cycle_colours_palettes_task');
     cycle_colours_delete_all_divs();
     delete_option('cycle_colours_toggle');
