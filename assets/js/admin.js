@@ -53,10 +53,10 @@ document.addEventListener('DOMContentLoaded', function () {
         
         colourInputs.forEach((input, idx) => {
             const selectedLabel = document.getElementById('selected-colour' + idx);
-            console.log('Input ID:', input.id, 'Selected Label ID:', selectedLabel ? selectedLabel.id : 'None');
+            //console.log('Input ID:', input.id, 'Selected Label ID:', selectedLabel ? selectedLabel.id : 'None');
             if (selectedLabel.style.display !== 'none') {
             const val = input.value;
-            console.log('Selected Colour:', val);
+            //console.log('Selected Colour:', val);
             colours.push(val);
             }
         });
@@ -101,3 +101,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+// Show and hide welcome message function
+function showWelcomeMessage() {
+    const msg = document.querySelector('.cycle-colours-welcome-message');
+    const btn = document.querySelector('.cycle-colours-welcome-button');
+    msg.classList.toggle('active');
+    btn.classList.toggle('active');
+    
+}

@@ -1,7 +1,7 @@
 <?php
 // Process class deletion
-if (isset($_POST['delete_class_btn']) && !empty($_POST['delete_class_select'])) {
-    $div_class = sanitize_text_field($_POST['delete_class_select']);
+if (isset($_POST['delete_class_btn']) && !empty($_POST['delete_class_select']) && isset(wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['cycle_colours_div_delete_task_nonce'])), 'cycle_colours_div_delete_task'))) {
+    $div_class = sanitize_text_field(wp_unslash($_POST['delete_class_select']));
     $ans_class = cycle_colours_delete_div_class($div_class);
     if ($ans_class) {
         /* translators: %s: div class */
@@ -14,7 +14,7 @@ if (isset($_POST['delete_class_btn']) && !empty($_POST['delete_class_select'])) 
 }
 
 // Process style deletion
-if (isset($_POST['delete_class_style_btn']) || isset($_POST['stop_schedule_event_btn']) && !empty($_POST['delete_class_style_select'])) {
+if (isset($_POST['delete_class_style_btn']) || isset($_POST['stop_schedule_event_btn']) && !empty($_POST['delete_class_style_select'])  && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['cycle_colours_delete_class_style_nonce'])), 'cycle_colours_delete_class_style')) {
     $parts = explode('|', $_POST['delete_class_style_select'], 2);
     if (count($parts) === 2) {
         list($div_class, $style) = $parts;
@@ -23,7 +23,7 @@ if (isset($_POST['delete_class_style_btn']) || isset($_POST['stop_schedule_event
             'style' => $style,
         ];
 
-        if (isset($_POST['delete_class_style_btn'])) {
+        if (isset($_POST['delete_class_style_btn']) && wp_verify_nonce(wp_unslash($_POST['cycle_colours_delete_class_style_nonce']), 'cycle_colours_delete_class_style')) {
             $ans_style = cycle_colours_delete_div_class_style($class_style_array);
             if ($ans_style) {
                 /* translators: %1$s: style, %2$s: div class */
@@ -34,7 +34,7 @@ if (isset($_POST['delete_class_style_btn']) || isset($_POST['stop_schedule_event
                 $error_message .= sprintf(__('Failed to delete div class %2$s and style %1$s due to an error.', 'cycle-colours'), esc_html($style), esc_html($div_class)) . PHP_EOL;
             }
         }
-        if (isset($_POST['stop_schedule_event_btn'])) {
+        if (isset($_POST['stop_schedule_event_btn']) && wp_verify_nonce(wp_unslash($_POST['cycle_colours_delete_class_style_nonce']), 'cycle_colours_delete_class_style')) {
             $ans_style = cycle_colours_change_div_interval($class_style_array, 0);
             if ($ans_style) {
                 /* translators: %1$s: style, %2$s: div class */

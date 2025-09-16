@@ -78,10 +78,22 @@ add_action('wp_enqueue_scripts', function () {
         if ($interval_key === '0') continue;
         $css = get_option('cycle_colours_inline_css_' . $interval_key, '');
         if ($css) {
-            wp_register_style('cycle-colours-frontend-inline-' . $interval_key, false);
+            wp_register_style('cycle-colours-frontend-inline-' . $interval_key, false, [], '1.0');
             wp_enqueue_style('cycle-colours-frontend-inline-' . $interval_key);
             wp_add_inline_style('cycle-colours-frontend-inline-' . $interval_key, $css);
         }
+    }
+});
+
+add_action('admin_notices', function () {
+    $deact_message = get_transient('cycle_colours_deactivation_message');
+    if (!empty($deact_message)) {
+        // Display success message
+        echo '<div class="notice notice-success is-dismissible">
+                <p>Plugin deactivated successfully, temp data removed and cron jobs stopped.</p>
+              </div>';
+        // Delete transient to prevent repeated display
+        delete_transient('cycle_colours_deactivation_message');
     }
 });
 
@@ -95,17 +107,5 @@ add_action('admin_notices', function () {
         echo '<p><strong>Plugin Uninstall Error:</strong> ' . esc_html($error) . '</p>';
         echo '</div>';
         delete_option('cycle_colours_uninstall_error'); // clear after showing
-    }
-});
-
-add_action('admin_notices', function () {
-    $message = get_transient('cycle_colours_deactivation_message', 'cycle-colours') . PHP_EOL;
-    if ($message) {
-        // Display success message
-        echo '<div class="notice notice-success is-dismissible">
-                <p>Plugin deactivated successfully, temp data removed and cron jobs stopped.</p>
-              </div>';
-        // Delete transient to prevent repeated display
-        delete_transient('cycle_colours_deactivation_message');
     }
 });

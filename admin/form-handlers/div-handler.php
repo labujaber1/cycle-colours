@@ -1,6 +1,6 @@
 <?php
 
-if (isset($_POST['submit_div'])) {
+if (isset($_POST['submit_div']) && wp_verify_nonce(wp_slash($_POST['cycle_colours_div_task_nonce']), 'cycle_colours_div_task')) {
     // Get all the selected colours from all inputs type=color min-2 max-4 saved in the hidden input,
     // and store them in an array.
     // Use the JSON array from the hidden input
@@ -17,18 +17,18 @@ if (isset($_POST['submit_div'])) {
         $error_message .= __('Save aborted, number of selected colours must be between 2 and 4.', 'cycle-colours') . PHP_EOL;
     } else {
         update_option('cycle_colours_toggle', 'div');
-        update_option('cycle_colours_div_interval', sanitize_text_field($_POST['div_interval']));
-        update_option('cycle_colours_div_class', sanitize_text_field($_POST['div_class']));
-        update_option('cycle_colours_div_style', sanitize_text_field($_POST['div_style']));
+        update_option('cycle_colours_div_interval', sanitize_text_field(wp_unslash($_POST['div_interval'])));
+        update_option('cycle_colours_div_class', sanitize_text_field(wp_unslash($_POST['div_class'])));
+        update_option('cycle_colours_div_style', sanitize_text_field(wp_unslash($_POST['div_style'])));
 
         update_option('cycle_colours_custom_colours', $custom_colours_array);
 
         // Prepare vars for div_array update function
-        $div_class = sanitize_text_field($_POST['div_class']);
-        $div_style = sanitize_text_field($_POST['div_style']);
+        $div_class = sanitize_text_field(wp_unslash($_POST['div_class']));
+        $div_style = sanitize_text_field(wp_unslash($_POST['div_style']));
         $style_uid = uniqid('cycle-colours-style-'); // Generate a unique ID for the div
         $custom_colours_array; //array type
-        $div_interval = sanitize_text_field($_POST['div_interval']);
+        $div_interval = sanitize_text_field(wp_unslash($_POST['div_interval']));
         update_option('cycle_colours_style_uid', $style_uid);
         // update the div array
         cycle_colours_update_div_array(

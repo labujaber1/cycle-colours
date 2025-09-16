@@ -18,7 +18,7 @@ function cycle_colours_deactivate_plugin()
     // stop all cron jobs
     cycle_colours_stop_cron_jobs();
     //display message
-    set_transient('cycle_colours_deactivation_message', true, 30);
+    set_transient('cycle_colours_deactivation_message', 'cycle-colours', 60);
 }
 
 function cycle_colours_stop_cron_jobs()

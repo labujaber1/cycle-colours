@@ -30,7 +30,7 @@ function cycle_colours_print_css()
     foreach ($interval_groups as $interval => $group) {
         if ($interval !== '0') {
             $css = cycle_colours_create_inline_css($group);
-            echo '<p>Inline CSS for each group: Interval ' . esc_html($interval) . ' minute(s) --> ' . esc_html($css) . '</p>';
+            echo '<p>Inline CSS for each group: Interval ' . esc_html($interval) . ' --> ' . esc_html($css) . '</p>';
         }
     }
 }

@@ -78,41 +78,41 @@ function render_cycle_colours_page()
     $message = '';
     $error_message = '';
     // Check if form has been submitted
-    if (isset($_POST['submit_palettes'])) {
+    if (isset($_POST['submit_palettes']) && wp_verify_nonce(wp_unslash($_POST['cycle_colours_palettes_nonce']), 'cycle_colours_set_palettes')) {
         require_once CYCLE_COLOURS_PLUGIN_PATH . 'admin/form-handlers/palette-handler.php';
     }
 
-    if (isset($_POST['submit_div'])) {
+    if (isset($_POST['submit_div']) && wp_verify_nonce(wp_unslash($_POST['cycle_colours_div_nonce']), 'cycle_colours_set_div')) {
         require_once CYCLE_COLOURS_PLUGIN_PATH . 'admin/form-handlers/div-handler.php';
     }
 
     // Check if the reset button has been clicked for palettes or div
     // Reset the settings to default values
-    if (isset($_POST['reset_palettes'])) {
+    if (isset($_POST['reset_palettes']) && wp_verify_nonce(wp_unslash($_POST['cycle_colours_palettes_nonce']), 'cycle_colours_set_palettes')) {
         cycle_colours_reset_palettes();
         //$div_array = get_option('cycle_colours_div_array', []);
         $message .= __('Palettes have been reset.', 'cycle-colours') . PHP_EOL;
     }
     // Reset the settings to default values
-    if (isset($_POST['delete_all_divs'])) {
+    if (isset($_POST['delete_all_divs']) && wp_verify_nonce(wp_unslash($_POST['cycle_colours_div_nonce']), 'cycle_colours_set_div')) {
         cycle_colours_delete_all_divs();
         //$div_array = get_option('cycle_colours_div_array', []);
         $message .= __('Div settings have been reset.', 'cycle-colours') . PHP_EOL;
     }
 
     // Process class deletion
-    if (isset($_POST['delete_class_btn']) && !empty($_POST['delete_class_select'])) {
+    if (isset($_POST['delete_class_btn']) && !empty($_POST['delete_class_select']) && wp_verify_nonce(wp_unslash($_POST['cycle_colours_div_delete_task_nonce']), 'cycle_colours_div_delete_task')) {
         require_once CYCLE_COLOURS_PLUGIN_PATH . 'admin/form-handlers/delete-handler.php';
     }
 
     // Process style deletion
-    if (isset($_POST['delete_class_style_btn']) || isset($_POST['stop_schedule_event_btn']) && !empty($_POST['delete_class_style_select'])) {
+    if (isset($_POST['delete_class_style_btn']) || isset($_POST['stop_schedule_event_btn']) && !empty($_POST['delete_class_style_select']) && wp_verify_nonce(wp_unslash($_POST['cycle_colours_delete_class_style_nonce']), 'cycle_colours_delete_class_style')) {
         require_once CYCLE_COLOURS_PLUGIN_PATH . 'admin/form-handlers/delete-handler.php';
     }
 
     // Process palette schedule edit if checkbox selected
     if (
-        isset($_POST['schedule_edit_palette'], $_POST['schedule_new_palette_interval'])
+        isset($_POST['schedule_edit_palette'], $_POST['schedule_new_palette_interval']) && wp_verify_nonce(wp_unslash($_POST['cycle_colours_edit_schedules_nonce']), 'cycle_colours_edit_schedules')
     ) {
         require_once CYCLE_COLOURS_PLUGIN_PATH . 'admin/form-handlers/edit-schedule-handler.php';
     }
@@ -121,14 +121,15 @@ function render_cycle_colours_page()
     if (
         isset($_POST['schedule_edit_div'], $_POST['schedule_new_div_interval']) &&
         is_array($_POST['schedule_edit_div']) &&
-        is_array($_POST['schedule_new_div_interval'])
+        is_array($_POST['schedule_new_div_interval']) &&
+        wp_verify_nonce(wp_unslash($_POST['cycle_colours_edit_schedules_nonce']), 'cycle_colours_edit_schedules')
     ) {
         require_once CYCLE_COLOURS_PLUGIN_PATH . 'admin/form-handlers/edit-schedule-handler.php';
     }
 
     // Get the current settings from the database
     // for palettes and divs
-    $toggle = get_option('cycle_colours_toggle');
+    $toggle = get_option('cycle_colours_toggle', 'palettes');
     // get user chosen palette id/index number
     $palettes = get_option('cycle_colours_palettes', []);
     // get interval time in minutes
@@ -152,16 +153,22 @@ function render_cycle_colours_page()
 
     echo '<div class="cycle-theme-palettes">';
     echo '<h1>Cycle Colours Plugin</h1>';
-
+    echo '<button class="cycle-colours-welcome-button" onclick="showWelcomeMessage()">Welcome.. </button>';
+    echo '<div class="cycle-colours-welcome-message">';
+    echo '<p>..thankyou for activating this plugin. If you want to alternate between colours for either a scheme or a single div class then you have come to the right place.
+    Whether you are a developer or designer I hope you find this plugin useful and have fun giving returning visitors something a little different to experience on your sites.
+    </p>';
+    echo '<p>Just a little note to add if you are using a child theme you needed worry as this looks for colour files in there too as long as they are in a styles or styles/colours directory, enough from me crack on.<p>';
+    echo '</div>'; // End of welcome message
     // Dropdown toggle for mode selection
     echo '<label for="cycle-colours-toggle">Select mode:</label><br> ';
     echo '<select name="toggle" id="cycle-colours-toggle">';
     echo '<option value="palettes"' . selected($toggle, 'palettes', false) . '>Colour Palettes</option>';
     echo '<option value="div"' . selected($toggle, 'div', false) . '>Specific Div</option>';
     echo '<option value="schedules"' . selected($toggle, 'schedules', false) . '>Edit Schedules</option>';
-    echo '</select><br><br>';
+    echo '</select><br>';
     // Display messages
-    echo '<div class="cycle-colours-info">';
+    echo '<div class="cycle-colours-info-messages">';
     if (!empty($message)) {
         echo '<div class="cycle-colours-messages"><p>' . esc_html($message) . '</p></div>';
     }
@@ -174,6 +181,7 @@ function render_cycle_colours_page()
     include CYCLE_COLOURS_PLUGIN_PATH . '/admin/forms/divs-form.php';
     include CYCLE_COLOURS_PLUGIN_PATH . '/admin/forms/schedules-form.php';
 
+    /*
     // Display a debugging block
     if (defined('CYCLE_COLOURS_DEBUG') && CYCLE_COLOURS_DEBUG) {
         echo '<div class="cycle-colours-debugging">';
@@ -181,6 +189,7 @@ function render_cycle_colours_page()
         echo '</div>'; // End of debugging block
 
     }
+    */
     echo '</div>'; // End of Cycle colours wrap 
 
 }

@@ -11,7 +11,10 @@ echo '<table class="wp-list-table widefat fixed striped id="palettes-schedule-ta
     <th>Scheduled Time</th>
     </tr>
     <tr>';
-if (isset($palette_timestamp) && $palette_timestamp > time()) {
+$palette_interval = get_option('cycle_colours_palettes_interval', 0);
+$palette_timestamp = wp_next_scheduled('cycle_colours_palettes_task');
+
+if (isset($palette_timestamp)) {
 
 
     echo '<td><input type="checkbox" name="schedule_edit_palette" value="cycle_colours_palettes_task"></td>

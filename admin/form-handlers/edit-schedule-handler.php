@@ -2,7 +2,7 @@
 if (
     isset($_POST['schedule_edit_palette'], $_POST['schedule_new_palette_interval'])
 ) {
-    $new_palette_interval = sanitize_text_field($_POST['schedule_new_palette_interval']);
+    $new_palette_interval = sanitize_text_field(wp_unslash($_POST['schedule_new_palette_interval']));
     update_option('cycle_colours_palettes_interval', $new_palette_interval);
     cycle_colours_schedule_event_palettes();
     update_option('cycle_colours_toggle', 'schedules');
@@ -15,10 +15,10 @@ if (
     is_array($_POST['schedule_edit_div']) &&
     is_array($_POST['schedule_new_div_interval'])
 ) {
-    foreach ($_POST['schedule_edit_div'] as $key => $checked) {
-        $div_class = $_POST['div_class'][$key] ?? '';
-        $div_style = $_POST['div_style'][$key] ?? '';
-        $new_interval = sanitize_text_field($_POST['schedule_new_div_interval'][$key] ?? '');
+    foreach (wp_unslash($_POST['schedule_edit_div']) as $key => $checked) {
+        $div_class = isset($_POST['div_class'][$key]) ? sanitize_text_field(wp_unslash($_POST['div_class'][$key])) : '';
+        $div_style = isset($_POST['div_style'][$key]) ? sanitize_text_field(wp_unslash($_POST['div_style'][$key])) : '';
+        $new_interval = isset($_POST['schedule_new_div_interval'][$key]) ? sanitize_text_field(wp_unslash($_POST['schedule_new_div_interval'][$key])) : '';
         if ($div_class && $div_style && $new_interval !== '') {
             $class_style_array = [
                 'div_class' => $div_class,

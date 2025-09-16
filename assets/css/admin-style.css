@@ -1,4 +1,31 @@
 /* cycle-colours/src/admin-style.css */
+/* Admin styles for Cycle Colours plugin */
+
+body {
+    font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 0.875rem;
+    line-height: 1.25;
+}
+
+h1 {
+    font-size: 2rem;
+    color: #534242;
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: #0f1383;
+    margin-bottom: 0;
+}
+
+p {
+    font-size: 0.875rem;
+}
+
+.cycle-colours-wrap {
+    padding: 0 1.5rem 0 1rem;
+}
+
 #cycle-colours-toggle {
     min-width: 200px;
     margin-bottom: 10px;
@@ -15,9 +42,21 @@
     padding: 0.5rem;
 }
 
+.button {
+    box-shadow: 0px 3px 10px rgba(248, 248, 148, 0.9), 0px 5px 8px rgba(42, 38, 255, 0.9);
+}
+
+.cycle-colours-info {
+    background-color: #f0f8ff;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    margin: 20px 0;
+    box-shadow: 0px 2px 5px rgba(8, 4, 248, 0.1);
+}
+
 .cycle-colours-debugging {
     background-color: rgb(245, 234, 161);
-    padding: 0.75rem;
+    padding: 0.5rem 1rem;
     border-radius: 5px;
 }
 
@@ -49,4 +88,40 @@
     flex-direction: row;
     width: 100%;
 
+}
+
+.cycle-colours-welcome-button {
+    background-color: #0f1383;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0px 3px 10px rgba(248, 248, 148, 0.9), 0px 5px 8px rgba(42, 38, 255, 0.9);
+    margin-bottom: 10px;
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cycle-colours-welcome-message {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    background-color: #f0f8ff;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    margin: 0;
+    box-shadow: 0px 2px 5px rgba(8, 4, 248, 0.1);
+    transition: margin-bottom 0.75s ease, opacity 1.25s ease, max-height 1s ease;
+}
+
+.cycle-colours-welcome-message.active {
+    opacity: 1;
+    max-height: 500px;
+    margin-bottom: 1rem;
+}
+
+.cycle-colours-welcome-button.active {
+    border-radius: 50%;
+    background-color: #a8a7d1;
+    box-shadow: none;
 }

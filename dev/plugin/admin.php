@@ -666,7 +666,7 @@ add_action('wp_enqueue_scripts', function () {
         if ($interval_key === '0') continue;
         $css = get_option('cycle_colours_inline_css_' . $interval_key, '');
         if ($css) {
-            wp_register_style('cycle-colours-frontend-inline-' . $interval_key, false);
+            wp_register_style('cycle-colours-frontend-inline-' . $interval_key, false, [], '1.0');
             wp_enqueue_style('cycle-colours-frontend-inline-' . $interval_key);
             wp_add_inline_style('cycle-colours-frontend-inline-' . $interval_key, $css);
         }
