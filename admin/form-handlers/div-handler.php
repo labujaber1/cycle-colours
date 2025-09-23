@@ -1,6 +1,6 @@
 <?php
 
-if (isset($_POST['submit_div']) && wp_verify_nonce(wp_slash($_POST['cycle_colours_div_task_nonce']), 'cycle_colours_div_task')) {
+if (isset($_POST['submit_div']) && wp_verify_nonce(wp_slash($_POST['cycle_colours_save_div_nonce']), 'cycle_colours_save_div')) {
     // Get all the selected colours from all inputs type=color min-2 max-4 saved in the hidden input,
     // and store them in an array.
     // Use the JSON array from the hidden input

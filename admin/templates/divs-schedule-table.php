@@ -1,6 +1,6 @@
 <?php
 
-echo '<table class="wp-list-table widefat fixed striped id="divs-schedule-table"><tr>
+echo '<table class="wp-list-table widefat fixed striped cycle-colours-table-styling" id="divs-schedule-table"><tr>
     <th>Select to change</th>
     <th>Scheduled Task</th>
     <th>Class/Style</th>

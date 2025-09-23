@@ -2,20 +2,24 @@
 // Display the palettes settings
 echo '<div id="palettes-settings" style="display:' . ($toggle === 'palettes' ? 'block' : 'none') . ';">';
 
-echo '<form method="post" action="">';
-wp_nonce_field('cycle_colours_set_palettes', 'cycle_colours_palettes_nonce');
-echo '<input type="hidden" name="action" value="cycle_colours_palettes_task">';
 echo '<h3>Colour Palettes</h3>';
-echo '<p>Select the theme palettes you want to cycle through and the desired interval for this to happen. 
-The list of files below have been retrieved from within the styles directory and sub directories in the parent and child themes with duplicate
+echo '<p>Select the theme palettes you want to cycle through and the desired interval for this to happen. </p>';
+echo '<button class="cycle-colours-toggle-button" onclick="toggleText(\'moreInfoPalettes\')">More info... </button>';
+echo '<div id="moreInfoPalettes" class="cycle-colours-toggle-text">';
+echo '<p>The list of files below have been retrieved from within the styles directory and sub directories in the parent and child themes with duplicate
 named files removed. 
 All data in the .json files will be included so for themes with other styles in the same files such as font styles, these will be included as well.
 Use a child theme to separate colour palettes if this is the case and is your wish or even add styles if you so wish. Give the file the same name as in the parent theme 
-since the child takes precedence over the parent theme when removing duplicate named files.
- </p>';
+since the child takes precedence over the parent theme when removing duplicate named files.</p>';
 echo '<p>On save the plugin will create a scheduled event to cycle through the selected palettes at the specified interval and keep doing it until the scheduled event is manually stopped. 
-    Refresh the page on the frontend to see the changes if it is open, as it is executed on page load. 
-    Resetting palettes removes data from the database and deletes the scheduled event but does not delete the theme colour files.</p>';
+Refresh the page on the frontend to see the changes if it is open, as it is executed on page load. 
+Resetting palettes removes data from the database and deletes the scheduled event but does not delete the theme colour files.</p>';
+echo '</div>'; // end of moreInfo
+
+echo '<form method="post" action="">';
+wp_nonce_field('cycle_colours_set_palettes', 'cycle_colours_palettes_nonce');
+echo '<input type="hidden" name="action" value="cycle_colours_palettes_task">';
+
 echo '<label for="palettes-select">Select Palettes (min 2, max 4):</label><br>';
 
 // Prepare arrays from theme files 

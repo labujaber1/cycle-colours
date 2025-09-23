@@ -1,0 +1,54 @@
+- Admin.php line 91 to 98 check functions ran ok before displaying message
+- 
+- Fix all wp ready suggestions from plugin beware of naming nonces
+- 
+- Fix divs not saving - done wrong naming when adding nonce and unsplash
+- 
+- When plugin closes change toggle to palettes
+- 
+- Add timeout for all messages to set variable back to empty
+- 
+- Create instructions page
+- Change debug status 
+- Add license 
+- Remove dev folder
+- Include tests run page
+- Include contact details via github for bug reporting and suggestions
+Add these to site and in readme.txt
+- Clean database 
+- Rerun tests with clean database
+- Check uninstall script and test
+- Include intended changes for v1.1 in readme.txt 
+eg create palette file for child theme, rewrite to OOP, add styles to child theme
+
+
+Manual testing 
+
+- Delete palettes - passed 18/9
+- Add palettes - passed 18/9
+- Add div - passed 18/9
+- Delete class - class deleted - passed 18/9
+                 - css inline changed - passed 18/9
+                 - schedule event amended - passed 18/9
+                 - test site changed - 18/9
+- Delete class/style - class/style deleted - passed 18/9
+                     - class/style css inline changed - failed 18/9 fixed passed 18/9
+                     #rerun schedule function out of place in delete-handler.php
+                     - schedule event amended - passed 18/9 
+                     - test site changed - passed 18/9
+- Stop schedule event - event interval set to 0 - passed 18/9
+                     - check in edit schedule - passed 18/9
+- Delete all classes - all classes removed - passed 18/9
+                     - css inline removed - passed 18/9
+                     - schedule events removed - passed 18/9
+                     - test site changed - passed 18/9
+- Edit schedule - interval changed palettes - passed 18/9
+                - schedule amended - passed 18/9
+                - test site changed - passed 18/9
+                - interval changed divs - passed 18/9
+                - css inline groups altered - passed 18/9
+                - schedule amended - passed 18/9
+                - check date time - passed 18/9
+                - check info section - passed 18/9
+                - test site changed - passed 18/9
+

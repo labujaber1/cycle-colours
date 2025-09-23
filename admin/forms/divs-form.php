@@ -3,12 +3,33 @@
 echo '<div id="div-settings" style="display:' . ($toggle === 'div' ? 'block' : 'none') . ';">';
 
 echo '<div class="create-divs" >';
-echo '<form method="post" action="">';
-wp_nonce_field('cycle_colours_div_task', 'cycle_colours_div_task_nonce');
-echo '<input type="hidden" name="action" value="cycle_colours_div_task">';
 // Display the custom colours settings
 echo '<h2>Create Divs</h2>';
-echo '<p>Enter the details of the specific div you want to target.</p>';
+echo '<p>Use this section to target a specific div class or id and change its colour at your chosen interval.</p>';
+echo '<button class="cycle-colours-toggle-button" onclick="toggleText(\'moreInfoDivs\')">More info... </button>';
+echo '<div id="moreInfoDivs" class="cycle-colours-toggle-text">';
+echo '<p>For best results, assign a unique id to your block in the page editor, as most WordPress blocks share classes 
+and changes will affect all instances. To target an id, use the format #idName or combine it with a class 
+(e.g., #idName.wp-block-button) depending on whether its your own block or an existing wp template block.
+To apply multiple styles to the same class or id, enter it again with a different style property.</p>';
+
+echo '<p>To find a class or id on an existing page, right-click the block in your browser and select "Inspect" to view the HTML or 
+use the editor to view the source. Use the editor to assign an id to your block.</p>';
+
+echo '<p>Enter any valid CSS style property (e.g., background-color, color, border) followed by a colon. 
+The plugin will cycle through your selected colours for that property. 
+To add more styles, enter the class or id again with a different property.</p>';
+
+echo '<p>Schedules are set per style and grouped by interval. Each interval type will have its own scheduled event.
+An inline CSS style block is generated for each interval type to apply all the associated styles.
+The generated inline CSS is also shown at the end of this page for your information.</p>';
+echo '</div>'; // End of more info
+
+
+echo '<form method="post" action="">';
+wp_nonce_field('cycle_colours_save_div', 'cycle_colours_save_div_nonce');
+echo '<input type="hidden" name="action" value="cycle_colours_save_div">';
+
 echo '<label for="div_class">Enter the div class or id (prefix # for id):</label><br>';
 echo '<input type="text" name="div_class" id="div-class" value="' . esc_attr($div_class) . '" placeholder="wp-block-core-button"><br><br>';
 
@@ -40,6 +61,9 @@ echo '</select><br><br>';
 // Display the save button
 echo '<input type="submit" name="submit_div" value="Save Settings" class="button button-primary">';
 echo '</form><br>'; // End of div form
+echo '<p>Note: The plugin will generate inline css correctly as entered by you but it is possible that not all CSS properties may work as expected. This could be 
+due to theme or block-specific styles taking precedence over inline css styles. If this occurs sadly it is beyond the scope of this plugin to resolve.
+</p>'; // Note.'
 echo '</div>'; // End of create divs
 
 // Display the manage divs section 
@@ -83,7 +107,7 @@ echo '</form>'; // End of reset form
 
 echo '<br><note>Note: Deleting classes and styles will also remove their scheduled events.</note><br>';
 echo '<note>Scheduled events are tied to styles and not classes. Stopping the scheduled event will actually remove it by setting the interval to 0, so restarting it can be done in the edit schedules section. 
-        Changing data for a current div will overwrite the existing style data and not duplicate it. Schedules are removed and rescheduled for any changes to the interval. View active schedules below:</note>';
+Changing data for a current div will overwrite the existing style data and not duplicate it. Schedules are removed and rescheduled for any changes to the interval. View active schedules below:</note>';
 echo '</div>'; // End of manage-divs
 
 echo '<div class="cycle-colours-info">';

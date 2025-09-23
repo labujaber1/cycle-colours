@@ -82,7 +82,7 @@ function render_cycle_colours_page()
         require_once CYCLE_COLOURS_PLUGIN_PATH . 'admin/form-handlers/palette-handler.php';
     }
 
-    if (isset($_POST['submit_div']) && wp_verify_nonce(wp_unslash($_POST['cycle_colours_div_nonce']), 'cycle_colours_set_div')) {
+    if (isset($_POST['submit_div']) && wp_verify_nonce(wp_unslash($_POST['cycle_colours_save_div_nonce']), 'cycle_colours_save_div')) {
         require_once CYCLE_COLOURS_PLUGIN_PATH . 'admin/form-handlers/div-handler.php';
     }
 
@@ -90,18 +90,17 @@ function render_cycle_colours_page()
     // Reset the settings to default values
     if (isset($_POST['reset_palettes']) && wp_verify_nonce(wp_unslash($_POST['cycle_colours_palettes_nonce']), 'cycle_colours_set_palettes')) {
         cycle_colours_reset_palettes();
-        //$div_array = get_option('cycle_colours_div_array', []);
         $message .= __('Palettes have been reset.', 'cycle-colours') . PHP_EOL;
     }
+
     // Reset the settings to default values
-    if (isset($_POST['delete_all_divs']) && wp_verify_nonce(wp_unslash($_POST['cycle_colours_div_nonce']), 'cycle_colours_set_div')) {
+    if (isset($_POST['delete_all_divs']) && wp_verify_nonce(wp_unslash($_POST['cycle_colours_div_all_delete_task_nonce']), 'cycle_colours_div_all_delete_task')) {
         cycle_colours_delete_all_divs();
-        //$div_array = get_option('cycle_colours_div_array', []);
-        $message .= __('Div settings have been reset.', 'cycle-colours') . PHP_EOL;
+        $message .= __('All divs have been deleted.', 'cycle-colours') . PHP_EOL;
     }
 
     // Process class deletion
-    if (isset($_POST['delete_class_btn']) && !empty($_POST['delete_class_select']) && wp_verify_nonce(wp_unslash($_POST['cycle_colours_div_delete_task_nonce']), 'cycle_colours_div_delete_task')) {
+    if (isset($_POST['delete_class_btn']) && !empty($_POST['delete_class_select']) && wp_verify_nonce(wp_unslash($_POST['cycle_colours_div_remove_class_task_nonce']), 'cycle_colours_div_remove_class_task')) {
         require_once CYCLE_COLOURS_PLUGIN_PATH . 'admin/form-handlers/delete-handler.php';
     }
 
@@ -153,8 +152,8 @@ function render_cycle_colours_page()
 
     echo '<div class="cycle-theme-palettes">';
     echo '<h1>Cycle Colours Plugin</h1>';
-    echo '<button class="cycle-colours-welcome-button" onclick="showWelcomeMessage()">Welcome.. </button>';
-    echo '<div class="cycle-colours-welcome-message">';
+    echo '<button  class="cycle-colours-welcome-button" onclick="toggleWelcome()">Welcome.. </button>';
+    echo '<div class="cycle-colours-welcome-text">';
     echo '<p>..thankyou for activating this plugin. If you want to alternate between colours for either a scheme or a single div class then you have come to the right place.
     Whether you are a developer or designer I hope you find this plugin useful and have fun giving returning visitors something a little different to experience on your sites.
     </p>';

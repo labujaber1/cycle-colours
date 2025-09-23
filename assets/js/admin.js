@@ -103,10 +103,18 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // Show and hide welcome message function
-function showWelcomeMessage() {
-    const msg = document.querySelector('.cycle-colours-welcome-message');
-    const btn = document.querySelector('.cycle-colours-welcome-button');
-    msg.classList.toggle('active');
-    btn.classList.toggle('active');
+function toggleWelcome() {
     
+    const btn = document.querySelector('.cycle-colours-welcome-button');
+    const msg = document.querySelector('.cycle-colours-welcome-text');
+    
+    btn.classList.toggle('active');
+    msg.classList.toggle('active');
+    
+}
+
+// Show and hide a text section 
+function toggleText(id) {
+    const text = document.getElementById(id);
+    text.classList.toggle('active');
 }

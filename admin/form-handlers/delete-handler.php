@@ -1,6 +1,6 @@
 <?php
 // Process class deletion
-if (isset($_POST['delete_class_btn']) && !empty($_POST['delete_class_select']) && isset(wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['cycle_colours_div_delete_task_nonce'])), 'cycle_colours_div_delete_task'))) {
+if (isset($_POST['delete_class_btn']) && !empty($_POST['delete_class_select']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['cycle_colours_div_remove_class_task_nonce'])), 'cycle_colours_div_remove_class_task')) {
     $div_class = sanitize_text_field(wp_unslash($_POST['delete_class_select']));
     $ans_class = cycle_colours_delete_div_class($div_class);
     if ($ans_class) {
@@ -43,8 +43,8 @@ if (isset($_POST['delete_class_style_btn']) || isset($_POST['stop_schedule_event
                 /* translators: %1$s: style, %2$s: div class */
                 $error_message .= sprintf(__('Failed to stop interval for div class %2$s and style %1$s due to an error. Please try again.', 'cycle-colours'), esc_html($style), esc_html($div_class)) . PHP_EOL;
             }
-            cycle_colours_rerun_scheduled_events(); // Rerun the scheduled events to update the divs
         }
+        cycle_colours_rerun_scheduled_events(); // Rerun the scheduled events to update the divs
     } else {
         $error_message .= __('Invalid class and style selection.', 'cycle-colours') . PHP_EOL;
     }
