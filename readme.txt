@@ -1,18 +1,17 @@
 === Cycle Colour ===
 Contributors: Lawrence Abu-Jaber
 Donate link: https://github.com/labujaber1
-Tags: colour, admin, palette, cycle, background, styles
+Tags: colour, palette, cycle, background, styles
 Requires at least: 5.0
-Tested up to: 6.3
+Tested up to: 6.8
 Requires PHP: 7.0
 Stable tag: 1.0.0
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
-Have you ever wanted to alternate between style files for your website because more than one fits the brief
-and not have to keep manually doing it? 
-Is there a specific div that you would like the colour to change every so often?
-Now you can and is managed entirely from the WordPress admin dashboard.
+Couldn't decide between colour palettes for your website or for a specific div?
+Why not alternate between them daily, weekly or monthly and manage them from the 
+dashboard. 
 
 == Description ==
 

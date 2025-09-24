@@ -1,8 +1,0 @@
-List of directory content
-
-Files used in the development of the plugin
-
-- flowchart
-- todo
-- parts development
-- copy of plugin files prior to file restructure and code refactor

@@ -1,7 +1,6 @@
 <?php
-if (
-    isset($_POST['schedule_edit_palette'], $_POST['schedule_new_palette_interval'])
-) {
+// Process palette schedule edit
+if (isset($_POST['schedule_edit_palette'], $_POST['schedule_new_palette_interval'], $_POST['cycle_colours_edit_schedules_nonce']) && wp_verify_nonce(sanitize_key($_POST['cycle_colours_edit_schedules_nonce']), 'cycle_colours_edit_schedules')) {
     $new_palette_interval = sanitize_text_field(wp_unslash($_POST['schedule_new_palette_interval']));
     update_option('cycle_colours_palettes_interval', $new_palette_interval);
     cycle_colours_schedule_event_palettes();
@@ -10,11 +9,9 @@ if (
 }
 
 // Process div schedule edit if checkbox selected
-if (
-    isset($_POST['schedule_edit_div'], $_POST['schedule_new_div_interval']) &&
-    is_array($_POST['schedule_edit_div']) &&
-    is_array($_POST['schedule_new_div_interval'])
-) {
+// Note: checking that both $_POST['schedule_edit_div'] and $_POST['schedule_new_div_interval'] are arrays to prevent PHP warnings/notices
+// as they should be arrays from the form and sanitizing data separately as used
+if (isset($_POST['schedule_edit_div'], $_POST['schedule_new_div_interval'], $_POST['cycle_colours_edit_schedules_nonce']) && is_array($_POST['schedule_edit_div']) && is_array($_POST['schedule_new_div_interval'] && wp_verify_nonce(sanitize_key($_POST['cycle_colours_edit_schedules_nonce']), 'cycle_colours_edit_schedules'))) {
     foreach (wp_unslash($_POST['schedule_edit_div']) as $key => $checked) {
         $div_class = isset($_POST['div_class'][$key]) ? sanitize_text_field(wp_unslash($_POST['div_class'][$key])) : '';
         $div_style = isset($_POST['div_style'][$key]) ? sanitize_text_field(wp_unslash($_POST['div_style'][$key])) : '';

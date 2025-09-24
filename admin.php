@@ -78,50 +78,50 @@ function render_cycle_colours_page()
     $message = '';
     $error_message = '';
     // Check if form has been submitted
-    if (isset($_POST['submit_palettes']) && wp_verify_nonce(wp_unslash($_POST['cycle_colours_palettes_nonce']), 'cycle_colours_set_palettes')) {
+    if (isset($_POST['submit_palettes'], $_POST['cycle_colours_palettes_nonce']) && wp_verify_nonce(sanitize_key($_POST['cycle_colours_palettes_nonce']), 'cycle_colours_set_palettes')) {
         require_once CYCLE_COLOURS_PLUGIN_PATH . 'admin/form-handlers/palette-handler.php';
     }
 
-    if (isset($_POST['submit_div']) && wp_verify_nonce(wp_unslash($_POST['cycle_colours_save_div_nonce']), 'cycle_colours_save_div')) {
+    if (isset($_POST['submit_div'], $_POST['cycle_colours_save_div_nonce']) && wp_verify_nonce(sanitize_key($_POST['cycle_colours_save_div_nonce']), 'cycle_colours_save_div')) {
         require_once CYCLE_COLOURS_PLUGIN_PATH . 'admin/form-handlers/div-handler.php';
     }
 
     // Check if the reset button has been clicked for palettes or div
     // Reset the settings to default values
-    if (isset($_POST['reset_palettes']) && wp_verify_nonce(wp_unslash($_POST['cycle_colours_palettes_nonce']), 'cycle_colours_set_palettes')) {
+    if (isset($_POST['reset_palettes'], $_POST['cycle_colours_palettes_nonce']) && wp_verify_nonce(sanitize_key($_POST['cycle_colours_palettes_nonce']), 'cycle_colours_set_palettes')) {
         cycle_colours_reset_palettes();
         $message .= __('Palettes have been reset.', 'cycle-colours') . PHP_EOL;
     }
 
     // Reset the settings to default values
-    if (isset($_POST['delete_all_divs']) && wp_verify_nonce(wp_unslash($_POST['cycle_colours_div_all_delete_task_nonce']), 'cycle_colours_div_all_delete_task')) {
+    if (isset($_POST['delete_all_divs'], $_POST['cycle_colours_div_all_delete_task_nonce']) && wp_verify_nonce(sanitize_key($_POST['cycle_colours_div_all_delete_task_nonce']), 'cycle_colours_div_all_delete_task')) {
         cycle_colours_delete_all_divs();
         $message .= __('All divs have been deleted.', 'cycle-colours') . PHP_EOL;
     }
 
     // Process class deletion
-    if (isset($_POST['delete_class_btn']) && !empty($_POST['delete_class_select']) && wp_verify_nonce(wp_unslash($_POST['cycle_colours_div_remove_class_task_nonce']), 'cycle_colours_div_remove_class_task')) {
+    if (isset($_POST['delete_class_btn'], $_POST['cycle_colours_div_remove_class_task_nonce']) && !empty($_POST['delete_class_select']) && wp_verify_nonce(sanitize_key($_POST['cycle_colours_div_remove_class_task_nonce']), 'cycle_colours_div_remove_class_task')) {
         require_once CYCLE_COLOURS_PLUGIN_PATH . 'admin/form-handlers/delete-handler.php';
     }
 
     // Process style deletion
-    if (isset($_POST['delete_class_style_btn']) || isset($_POST['stop_schedule_event_btn']) && !empty($_POST['delete_class_style_select']) && wp_verify_nonce(wp_unslash($_POST['cycle_colours_delete_class_style_nonce']), 'cycle_colours_delete_class_style')) {
+    if (isset($_POST['delete_class_style_btn'], $_POST['cycle_colours_delete_class_style_nonce']) || isset($_POST['stop_schedule_event_btn']) && !empty($_POST['delete_class_style_select']) && wp_verify_nonce(sanitize_key($_POST['cycle_colours_delete_class_style_nonce']), 'cycle_colours_delete_class_style')) {
         require_once CYCLE_COLOURS_PLUGIN_PATH . 'admin/form-handlers/delete-handler.php';
     }
 
     // Process palette schedule edit if checkbox selected
     if (
-        isset($_POST['schedule_edit_palette'], $_POST['schedule_new_palette_interval']) && wp_verify_nonce(wp_unslash($_POST['cycle_colours_edit_schedules_nonce']), 'cycle_colours_edit_schedules')
+        isset($_POST['schedule_edit_palette'], $_POST['schedule_new_palette_interval'], $_POST['cycle_colours_edit_schedules_nonce']) && wp_verify_nonce(sanitize_key($_POST['cycle_colours_edit_schedules_nonce']), 'cycle_colours_edit_schedules')
     ) {
         require_once CYCLE_COLOURS_PLUGIN_PATH . 'admin/form-handlers/edit-schedule-handler.php';
     }
 
     // Process div schedule edit if checkbox selected
     if (
-        isset($_POST['schedule_edit_div'], $_POST['schedule_new_div_interval']) &&
+        isset($_POST['schedule_edit_div'], $_POST['schedule_new_div_interval'], $_POST['cycle_colours_edit_schedules_nonce']) &&
         is_array($_POST['schedule_edit_div']) &&
         is_array($_POST['schedule_new_div_interval']) &&
-        wp_verify_nonce(wp_unslash($_POST['cycle_colours_edit_schedules_nonce']), 'cycle_colours_edit_schedules')
+        wp_verify_nonce(sanitize_key($_POST['cycle_colours_edit_schedules_nonce']), 'cycle_colours_edit_schedules')
     ) {
         require_once CYCLE_COLOURS_PLUGIN_PATH . 'admin/form-handlers/edit-schedule-handler.php';
     }
