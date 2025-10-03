@@ -11,7 +11,7 @@
  * License URI: https://opensource.org/licenses/MIT
  * Text Domain: cycle-colours
  * Requires at least: 5.0
- * Requires PHP: 7.0
+ * Requires PHP: 8.4.4
  * Tested up to: 6.3
  *  
  */

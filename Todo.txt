@@ -1,6 +1,6 @@
 - Admin.php line 91 to 98 check functions ran ok before displaying message
 - 
-- Fix all wp ready suggestions from plugin beware of naming nonces
+- Fix all wp ready suggestions from plugin beware of naming nonces - done 3.10.25
 - 
 - Fix divs not saving - done wrong naming when adding nonce and unsplash
 - 

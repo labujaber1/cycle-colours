@@ -8,7 +8,7 @@ if (isset($_POST['submit_palettes'], $_POST['palettes'], $_POST['palettes_interv
     } else {
         // Create for first time and update the settings from the form data on submit
         update_option('cycle_colours_toggle', 'palettes');
-        update_option('cycle_colours_palettes', wp_unslash($_POST['palettes'] ?? []));
+        update_option('cycle_colours_palettes', array_map('sanitize_text_field', wp_unslash($_POST['palettes'])) ?? []);
         update_option('cycle_colours_palettes_interval', sanitize_text_field(wp_unslash($_POST['palettes_interval'])));
         cycle_colours_schedule_event_palettes();
         if (wp_next_scheduled('cycle_colours_palettes_task')) {
