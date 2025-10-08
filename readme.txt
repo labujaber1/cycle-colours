@@ -3,15 +3,16 @@ Contributors: Lawrence Abu-Jaber
 Donate link: https://github.com/labujaber1
 Tags: colour, palette, cycle, background, styles
 Requires at least: 5.0
-Tested up to: 6.8.2
+Tested up to: 6.3
 Requires PHP: 8.4.4
 Stable tag: 1.0.0
-License: MIT
-License URI: https://opensource.org/licenses/MIT
+License: GPL v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Can't decide between different colour palettes or for a specific div?
 Why not alternate between them periodically and manage them from the dashboard? 
 
 == Installation ==
+
 Standard Installation
 1. Upload the plugin files to the `/wp-content/plugins/cycle-colour` directory, or install 
 the plugin through the WordPress plugins screen directly.
@@ -35,6 +36,7 @@ with the theme.json and the individual div styles are added as a single inline c
 * No dependencies, no classes, its designed to be light weight.
 * Intended for block based themes where palettes and styles are configured in .json files in a styles directory. Can also be used 
 in classic themes by selecting specific div classes or ids.
+* No data of any kind is actively collected from you from the plugin.
 
 == Some questions and answers ==
 
@@ -44,10 +46,12 @@ No. All functionality is managed from the admin dashboard.
 = Can I schedule colour changes? =
 Yes, you can select an interval from a dropdown list for cycling through the selected colours
 Individual div changes generate separate schedule events grouped by interval giving you more flexibility and choice.
+It is scheduled as soon as it is saved. A start/end time and date option will follow in a later version.
 
 = Can I select an Id to change?
 Yes, you will have to add the id name in the wp editor first which may look something like #idname.wp-block-post-title
 or #idname.wp-block-button on the frontend so this full reference, with prefixed #, is required to work not just the id name.
+Using just the class will change all instances of the class.
 
 = Can I create a style file or colour palette?
 Not yet but it is under consideration for future development. Currently the plugin searches for existing style (.json) files 
@@ -59,8 +63,11 @@ Yes, you can set as many specific divs as you want. You can have the site change
 up to 4 styles while having the header change its background colour each day and its font colour each month as an example. 
 
 = Can I set a date or time to stop the changes?
-No, the schedule events will keep going until you manually stop it by deleting it. There is no stop and resume option 
-but because of the simple UI its just as easy to add it back in when required.
+Not yet, the schedule events will keep going until you manually change the interval time in the edit schedule section. 
+Setting the interval to 'disabled' will stop the schedule and remove the css inline data. The schedule will remain visible in the 
+edit schedule section to change the interval to a positive time. If the class or id is deleted the schedule will also 
+be deleted.
+
 
 = Who would use this plugin?
 Anyone who would like to add colour variety to their website design in an automated way. Regular visiters will appreciate 
@@ -79,8 +86,8 @@ or something totally unique to the theme. The term 'div' refers to any html tag 
 the code and comments. The plugin does not distinguish between html tags as the inline css does not need it to work. 
 Changing a container, dropdown list, input field will work providing the class or id entered is correct for the frontend.
 The interval times are 1 minute (for testing), 1 hour, daily, weekly, and monthly. When testing allow for 1-1.5 minute 
-before refreshing the page preview as sometimes it is not exactly a minute between scheduled events which admittedly is 
-not understood as it uses the wordpress scheduling functions to do it.
+before refreshing the page preview as sometimes it is not exactly a minute between scheduled events even though wordpress 
+scheduling functions are used.
 
 == Screenshots ==
 
@@ -102,4 +109,4 @@ First release.
 
 == License ==
 
-MIT License. See LICENSE file for details.
+GPL v2 or later license. See LICENSE file for details.

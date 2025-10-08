@@ -11,7 +11,7 @@
 - Create instructions page
 - Change debug status 
 - Add license 
-- Remove dev folder
+- Remove dev folder - done
 - Include tests run page
 - Include contact details via github for bug reporting and suggestions
 Add these to site and in readme.txt
@@ -19,7 +19,9 @@ Add these to site and in readme.txt
 - Rerun tests with clean database
 - Check uninstall script and test
 - Include intended changes for v1.1 in readme.txt 
-eg create palette file for child theme, rewrite to OOP, add styles to child theme
+eg create palette file for child theme, rewrite to OOP, add styles to child theme, 
+add start stop time to schedule, search for ids or classes for dropdown list, add functionality
+to page editor?, 
 
 
 Manual testing 
