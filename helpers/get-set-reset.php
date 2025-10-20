@@ -15,6 +15,7 @@ function cycle_colours_deactivate_plugin()
 {
     cycle_colours_reset_palettes();
     cycle_colours_delete_div_temp_data();
+    cycle_colours_remove_all_options();
     // stop all cron jobs
     cycle_colours_stop_cron_jobs();
     //display message
@@ -51,6 +52,50 @@ function cycle_colours_reset_palettes()
     delete_option('cycle_colours_palettes');
     delete_option('cycle_colours_palettes_interval');
     delete_option('cycle_colours_current_palette_index');
+    delete_option('cycle_colours_current_palette');
+    delete_option('cycle_colours_selected_palette_index');
+    return true;
+}
+
+
+/**
+ * Deletes all plugin options from the WordPress database.
+ *
+ * This function is used in the plugin deactivation hook to clear all
+ * plugin settings from the WordPress database.
+ *
+ * @return bool True if all options were successfully deleted, false otherwise.
+ */
+function cycle_colours_remove_all_options()
+{
+    delete_option('cycle_colours_child_files');
+    delete_option('cycle_colours_current_palette');
+    delete_option('cycle_colours_current_palette_index');
+    delete_option('cycle_colours_custom_colors');
+    delete_option('cycle_colours_div_array');
+    delete_option('cycle_colours_div_interval');
+    delete_option('cycle_colours_div_class');
+    delete_option('cycle_colours_div_style');
+    delete_option('cycle_colours_divs_interval_daily');
+    delete_option('cycle_colours_divs_interval_hourly');
+    delete_option('cycle_colours_divs_interval_minute');
+    delete_option('cycle_colours_divs_interval_None');
+    delete_option('cycle_colours_divs_interval_weekly');
+    delete_option('cycle_colours_inline_css_Array');
+    delete_option('cycle_colours_inline_css_daily');
+    delete_option('cycle_colours_inline_css_hourly');
+    delete_option('cycle_colours_inline_css_minute');
+    delete_option('cycle_colours_inline_css_None');
+    delete_option('cycle_colours_inline_css_weekly');
+    delete_option('cycle_colours_palettes');
+    delete_option('cycle_colours_palettes_interval');
+    delete_option('cycle_colours_parent_files');
+    delete_option('cycle_colours_schedule_array');
+    delete_option('cycle_colours_style_files');
+    delete_option('cycle_colours_style_files_data');
+    delete_option('cycle_colours_style_uid');
+    delete_option('cycle_colours_toggle');
+    return true;
 }
 
 /**
@@ -107,7 +152,6 @@ function cycle_colours_delete_div_temp_data()
     delete_option('cycle_colours_div_class');
     delete_option('cycle_colours_div_style');
     delete_option('cycle_colours_custom_colours');
-    //delete_option('cycle_colours_div_interval');
 }
 
 /**
@@ -131,6 +175,7 @@ function cycle_colours_delete_all_divs()
     cycle_colours_intervals_housekeeping();
     // Ensure the inline CSS is updated
     cycle_colours_create_inline_css();
+    return true;
 }
 
 /**

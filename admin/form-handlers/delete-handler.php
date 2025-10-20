@@ -1,4 +1,24 @@
 <?php
+// Process reset palettes
+if (isset($_POST['reset_palettes'], $_POST['cycle_colours_palettes_nonce']) && wp_verify_nonce(sanitize_key($_POST['cycle_colours_palettes_nonce']), 'cycle_colours_set_palettes')) {
+    $ans_palettes = cycle_colours_reset_palettes();
+    if ($ans_palettes) {
+        $message .= __('Palettes have been reset.', 'cycle-colours') . PHP_EOL;
+    } else {
+        $error_message .= __('Failed to reset palettes due to an error.', 'cycle-colours') . PHP_EOL;
+    }
+}
+
+// Process delete all divs
+if (isset($_POST['delete_all_divs'], $_POST['cycle_colours_div_all_delete_task_nonce']) && wp_verify_nonce(sanitize_key($_POST['cycle_colours_div_all_delete_task_nonce']), 'cycle_colours_div_all_delete_task')) {
+    $ans_divs = cycle_colours_delete_all_divs();
+    if ($ans_divs) {
+        $message .= __('All divs have been deleted.', 'cycle-colours') . PHP_EOL;
+    } else {
+        $error_message .= __('Failed to delete all divs due to an error.', 'cycle-colours') . PHP_EOL;
+    }
+}
+
 // Process class deletion
 if (isset($_POST['delete_class_btn'], $_POST['cycle_colours_div_remove_class_task_nonce']) && !empty($_POST['delete_class_select']) && wp_verify_nonce(sanitize_key($_POST['cycle_colours_div_remove_class_task_nonce']), 'cycle_colours_div_remove_class_task')) {
     $div_class = sanitize_text_field(wp_unslash($_POST['delete_class_select']));
@@ -44,7 +64,7 @@ if (isset($_POST['delete_class_style_btn'], $_POST['cycle_colours_delete_class_s
                 $error_message .= sprintf(__('Failed to stop interval for div class %2$s and style %1$s due to an error. Please try again.', 'cycle-colours'), esc_html($style), esc_html($div_class)) . PHP_EOL;
             }
         }
-        cycle_colours_rerun_scheduled_events(); // Rerun the scheduled events to update the divs
+        cycle_colours_rerun_scheduled_events();
     } else {
         $error_message .= __('Invalid class and style selection.', 'cycle-colours') . PHP_EOL;
     }

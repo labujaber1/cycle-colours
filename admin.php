@@ -89,14 +89,12 @@ function render_cycle_colours_page()
     // Check if the reset button has been clicked for palettes or div
     // Reset the settings to default values
     if (isset($_POST['reset_palettes'], $_POST['cycle_colours_palettes_nonce']) && wp_verify_nonce(sanitize_key($_POST['cycle_colours_palettes_nonce']), 'cycle_colours_set_palettes')) {
-        cycle_colours_reset_palettes();
-        $message .= __('Palettes have been reset.', 'cycle-colours') . PHP_EOL;
+        require_once CYCLE_COLOURS_PLUGIN_PATH . 'admin/form-handlers/delete-handler.php';
     }
 
     // Reset the settings to default values
     if (isset($_POST['delete_all_divs'], $_POST['cycle_colours_div_all_delete_task_nonce']) && wp_verify_nonce(sanitize_key($_POST['cycle_colours_div_all_delete_task_nonce']), 'cycle_colours_div_all_delete_task')) {
-        cycle_colours_delete_all_divs();
-        $message .= __('All divs have been deleted.', 'cycle-colours') . PHP_EOL;
+        require_once CYCLE_COLOURS_PLUGIN_PATH . 'admin/form-handlers/delete-handler.php';
     }
 
     // Process class deletion

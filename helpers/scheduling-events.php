@@ -30,6 +30,7 @@ function cycle_colours_schedule_event_palettes()
  */
 function cycle_colours_schedule_events_by_interval($interval_groups)
 {
+    error_log('Scheduling events for intervals: ' . implode(', ', array_keys($interval_groups)) . '.' . PHP_EOL, 3, error_log_file()); // For debugging purposes
     $schedule_array = [];
     foreach ($interval_groups as $interval => $group) {
         if ($interval === '0') continue; // Skip disabled intervals
@@ -77,15 +78,17 @@ function cycle_colours_intervals_housekeeping()
  * This function is used to update the scheduled events and inline CSS when the div array is updated.
  * It groups the divs by their interval settings and saves the groups back to the options.
  * It then schedules events for each group and regenerates the inline CSS for each group.
- *
+ * 
  * @return void
  */
 function cycle_colours_rerun_scheduled_events()
 {
+    Error_log('Rerunning scheduled events for divs.' . PHP_EOL, 3, error_log_file()); // For debugging purposes
     $div_array = get_option('cycle_colours_div_array', []);
     $interval_groups = cycle_colours_group_divs_by_interval($div_array);
     cycle_colours_save_interval_groups($interval_groups);
     cycle_colours_schedule_events_by_interval($interval_groups);
+
     // Clear the inline CSS for all intervals
     foreach ($interval_groups as $interval => $group) {
         if ($interval !== '0') {

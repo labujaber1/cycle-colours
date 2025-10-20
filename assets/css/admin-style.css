@@ -64,6 +64,10 @@ p {
     border-radius: 5px;
 }
 
+.cycle-colours-info-messages {
+    display: block;
+}
+
 .cycle-colours-errors {
     background-color: #f8d7da;
     color: #721c24;
@@ -81,11 +85,28 @@ p {
     border-radius: 5px;
     font-size: 40px;
     text-wrap: wrap;
+    animation-name: fadeOut;
+    animation-duration: 3s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    animation-delay: 5s;
 
     p {
         font: 400 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     }
 }
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        display: none;
+    }
+}
+
 
 .cycle-colours-buttons-wrap {
     display: flex;

@@ -59,6 +59,8 @@ add_action('cycle_colours_palettes_task', 'cycle_colours_palettes_task');
  * This will create a separate action for each interval defined in the cron schedules.
  */
 add_action('init', function () {
+    //$timestamp = date('d-m-Y H:i:s', time()); // Get the current date and time
+    //error_log('Initializing interval actions (add action). - ' . $timestamp . '.' . PHP_EOL, 3, error_log_file()); // For debugging purposes
     $schedules = apply_filters('cron_schedules', []);
     foreach ($schedules as $interval_key => $interval_data) {
         if ($interval_key === '0') continue;

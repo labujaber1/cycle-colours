@@ -1,18 +1,18 @@
-- Admin.php line 91 to 98 check functions ran ok before displaying message
+- Admin.php line 91 to 98 check functions ran ok before displaying message - done 08/10/2025
 - 
 - Fix all wp ready suggestions from plugin beware of naming nonces - done 3.10.25
 - 
 - Fix divs not saving - done wrong naming when adding nonce and unsplash
 - 
-- When plugin closes change toggle to palettes
+- When plugin closes change toggle to palettes - plugins don't close, no exit/close event.
 - 
-- Add timeout for all messages to set variable back to empty
+- Add timeout for all messages to set variable back to empty - done using css animations
 - 
 - Create instructions page
 - Change debug status 
-- Add license 
+- Add license - done
 - Remove dev folder - done
-- Include tests run page
+- Include tests run page - done below
 - Include contact details via github for bug reporting and suggestions
 Add these to site and in readme.txt
 - Clean database 
@@ -22,7 +22,7 @@ Add these to site and in readme.txt
 eg create palette file for child theme, rewrite to OOP, add styles to child theme, 
 add start stop time to schedule, search for ids or classes for dropdown list, add functionality
 to page editor?, 
-
+ - Div index not changing check all update/get options for naming errors - done, changed div interval task
 
 Manual testing 
 
@@ -54,3 +54,73 @@ Manual testing
                 - check info section - passed 18/9
                 - test site changed - passed 18/9
 
+
+
+
+delete_option('cycle_colours_child_files');
+    delete_option('cycle_colours_current_color_index');
+    delete_option('cycle_colours_current_custom_colour');
+    delete_option('cycle_colours_current_palette');
+    delete_option('cycle_colours_current_palette_index');
+    delete_option('cycle_colours_custom_colors');
+    delete_option('cycle_colours_div_array');
+    delete_option('cycle_colours_div_interval');
+    delete_option('cycle_colours_divs_interval_daily');
+    delete_option('cycle_colours_divs_interval_hourly');
+    delete_option('cycle_colours_divs_interval_minute');
+    delete_option('cycle_colours_divs_interval_None');
+    delete_option('cycle_colours_divs_interval_weekly');
+    delete_option('cycle_colours_inline_css_daily');
+    delete_option('cycle_colours_inline_css_hourly');
+    delete_option('cycle_colours_inline_css_minute');
+    delete_option('cycle_colours_inline_css_None');
+    delete_option('cycle_colours_inline_css_weekly');
+    delete_option('cycle_colours_interval');
+    delete_option('cycle_colours_interval_groups_array');
+    delete_option('cycle_colours_palette_index');
+    delete_option('cycle_colours_palettes');
+    delete_option('cycle_colours_palettes_interval');
+    delete_option('cycle_colours_parent_files');
+    delete_option('cycle_colours_schedule_array');
+    delete_option('cycle_colours_selected_palette_index');
+    delete_option('cycle_colours_style_files');
+    delete_option('cycle_colours_style_files_data');
+    delete_option('cycle_colours_style_uid');
+    delete_option('cycle_colours_toggle');
+
+Main options list from options.php
+cycle_colours_current_color_index	
+cycle_colours_current_custom_colour	
+cycle_colours_current_palette	
+cycle_colours_current_palette_index	
+cycle_colours_custom_colors	
+cycle_colours_div_array	
+cycle_colours_div_interval	
+cycle_colours_div_uid	
+cycle_colours_divs_interval_1	
+cycle_colours_divs_interval_10080	
+cycle_colours_divs_interval_60	
+cycle_colours_divs_interval_daily	
+cycle_colours_divs_interval_hourly	
+cycle_colours_divs_interval_minute	
+cycle_colours_divs_interval_None	
+cycle_colours_divs_interval_weekly	
+cycle_colours_full_inline_css	
+cycle_colours_inline_css_1	
+cycle_colours_inline_css_10080	
+cycle_colours_inline_css_60	
+cycle_colours_inline_css_daily	
+cycle_colours_inline_css_hourly	
+cycle_colours_inline_css_minute	
+cycle_colours_inline_css_None	
+cycle_colours_inline_css_weekly	
+cycle_colours_interval	
+cycle_colours_interval_groups_array	
+cycle_colours_palette_index	
+cycle_colours_palettes	
+cycle_colours_palettes_interval	
+cycle_colours_schedule_array	
+cycle_colours_selected_palette_index	
+cycle_colours_style_files	
+cycle_colours_style_files_data	
+cycle_colours_toggle

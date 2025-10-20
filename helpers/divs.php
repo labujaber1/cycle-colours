@@ -82,39 +82,86 @@ function cycle_colours_group_divs_by_interval($div_array)
 
 
 
-
 /**
- * Task to cycle through the divs based on their interval settings.
+ * Processes the div colour cycling task for a specific interval.
  *
- * This function retrieves the divs grouped by their interval settings and cycles through their colours.
- * It updates the current colour index and saves the updated styles back to the database.
+ * This function retrieves the divs associated with the specified interval
+ * and the main div array, updates their colour indexes, and saves the changes.
+ * It also generates and saves the inline CSS for the updated divs.
  *
- * @param string $interval The interval for which to cycle the divs.
+ * @param string $interval The interval to process.
  * @return void
  */
 function cycle_colours_div_task_by_interval($interval)
 {
-    $group = get_option('cycle_colours_divs_interval_' . $interval, []);
+
+    //error_log('Running div task by interval: ' . $interval . '.' . PHP_EOL, 3, error_log_file()); // For debugging purposes
+    $interval_group = get_option('cycle_colours_divs_interval_' . $interval, []);
+    $main_array = get_option('cycle_colours_div_array', []);
+    if (empty($interval_group) || empty($main_array)) {
+        error_log('Error in function div task by interval: Empty array cannot process: ' . $interval . '.' . PHP_EOL, 3, error_log_file()); // For debugging purposes
+        return;
+    }
+    //error_log('Running divs by interval update.' . PHP_EOL, 3, error_log_file()); // For debugging purposes
+    $group = cycle_colours_amend_colour_index_in_array($interval_group, $interval);
+    //error_log('Running main array update.' . PHP_EOL, 3, error_log_file()); // For debugging purposes
+    $array = cycle_colours_amend_colour_index_in_array($main_array, $interval);
+
+    // exit early before updates if no changes made
+    if ($group === false || $array === false) {
+        error_log('Error occurred amending colour indexes: No changes made to colour index for interval - ' . $interval . ' or main array.' . PHP_EOL, 3, error_log_file()); // For debugging purposes' . PHP_EOL, 3, error_log_file()); // For debugging purposes
+        return;
+    } else {
+        update_option('cycle_colours_divs_interval_' . $interval, $group);
+        //error_log('Div task by interval: updated div interval array new colour index.' . PHP_EOL, 3, error_log_file()); // For debugging purposes
+        update_option('cycle_colours_div_array', $array);
+        //error_log('Div task by interval: updated main div array new colour index and rerun scheduled events.' . PHP_EOL, 3, error_log_file()); // For debugging purposes
+
+        // Generate and save inline CSS for this interval
+        $css = cycle_colours_create_inline_css($group);
+        update_option('cycle_colours_inline_css_' . $interval, $css);
+        //error_log('Div task by interval: updated inline css.' . $css . PHP_EOL, 3, error_log_file()); // For debugging purposes
+
+    }
+}
+
+/**
+ * Amends the colour index in the given array for the specified interval.
+ *
+ * This function iterates through the provided array and updates the current colour index
+ * for each style that matches the specified interval. If a style's interval is '0', it is skipped.
+ * The function returns the updated array if any changes were made, otherwise it returns false.
+ *
+ * @param array $array The array of divs and their styles to be updated.
+ * @param string $interval The interval to match for updating the colour index.
+ * @return array|false The updated array if changes were made, false otherwise.
+ */
+function cycle_colours_amend_colour_index_in_array($array, $interval)
+{
+    $new_array = [];
+    $new_array = $array;
     $changed = false;
-    foreach ($group as $div_class => &$styles) {
+    foreach ($new_array as $div_class => &$styles) {
         foreach ($styles as $style => &$data) {
             if ($data['interval'] === '0') continue;
+            //error_log('Style data - ' . print_r($data, true) . '.' . PHP_EOL, 3, error_log_file()); // For debugging purposes
             $colours = $data['custom_colours_array'] ?? [];
-            if (!empty($colours)) {
+            if (!empty($colours) && $data['interval'] === $interval) {
+                //error_log('Current colour index before amend: ' . $data['current_colour_index'] . '. Colour: ' . $data['current_colour'] . '.' . PHP_EOL, 3, error_log_file()); // For debugging purposes
                 $data['current_colour_index'] = ($data['current_colour_index'] + 1) % count($colours);
                 $data['current_colour'] = $colours[$data['current_colour_index']];
                 $changed = true;
+                //error_log('amending colour index to index: ' . $data['current_colour_index'] . '. Colour: ' . $data['current_colour'] . '.' . PHP_EOL, 3, error_log_file()); // For debugging purposes
             }
         }
     }
     if ($changed) {
-        update_option('cycle_colours_divs_interval_' . $interval, $group);
+        return $new_array;
+    } else {
+        error_log('Error: No changes made to colour index during amend colour index in array function.' . PHP_EOL, 3, error_log_file()); // For debugging purposes
+        return false;
     }
-    // Generate and save inline CSS for this interval
-    $css = cycle_colours_create_inline_css($group);
-    update_option('cycle_colours_inline_css_' . $interval, $css);
 }
-
 /**
  * FUNCTIONS TO ASSIST WITH EDIT SCHEDULE PROCESSING.
  */

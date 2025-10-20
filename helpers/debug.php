@@ -13,7 +13,7 @@ function error_log_file()
     }
     return $log_file;
 }
-//error_log('Message to print in the log file.', 'cycle-colours' . PHP_EOL, 3, error_log_file()); // For debugging purposes
+//error_log('Message to print in the log file.' . PHP_EOL, 3, error_log_file()); // For debugging purposes
 
 /**
  * Prints the inline CSS for each group of divs by their interval settings.
@@ -39,6 +39,8 @@ function cycle_colours_print_css()
  * palettes and their interval, the current div class and style, the custom
  * colours and their interval, the div array, the current inline css, and the
  * next scheduled tasks. Using globals which are cleared and so expected to be empty.
+ * 
+ * Data now displayed as user info at the bottom of palettes and div pages.
  *
  * @param string $toggle The current toggle value.
  * @param array  $palettes The palettes array.
