@@ -12,16 +12,14 @@ if (! defined('WP_UNINSTALL_PLUGIN')) {
 }
 
 // Removing all options and cron jobs created by Cycle Colours plugin
-// No custom tables used
+// No custom tables used in v1.0.0 so no need to drop any tables
 try {
-    cycle_colours_reset_palettes();
-    delete_option('cycle_colours_style_files_data');
-    delete_option('cycle_colours_style_files');
-    delete_option('cycle_colours_style_current_palette');
-    wp_clear_scheduled_hook('cycle_colours_palettes_task');
-    cycle_colours_delete_all_divs();
-    delete_option('cycle_colours_toggle');
+    // remove all data saved in options 
+    cycle_colours_remove_all_options();
+    // stop all cron jobs
+    cycle_colours_stop_cron_jobs();
     cycle_colours_intervals_housekeeping();
+    set_transient('cycle_colours_uninstall_message', 'cycle-colours', 60);
 } catch (\Throwable $th) {
     update_option('cycle_colours_uninstall_error', $th->getMessage());
 }

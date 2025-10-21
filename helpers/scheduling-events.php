@@ -46,7 +46,7 @@ function cycle_colours_schedule_events_by_interval($interval_groups)
  * Checks which intervals are currently in use and removes any schedules and options
  * that are not being used.
  *
- * This function is called on plugin deactivation or when the plugin is updated.
+ * This function is used for housekeeping to remove any schedules and options that are no longer needed.
  * 
  * @return void
  */
@@ -67,7 +67,6 @@ function cycle_colours_intervals_housekeeping()
             wp_clear_scheduled_hook($hook);
             delete_option('cycle_colours_divs_interval_' . $interval_key);
             delete_option('cycle_colours_inline_css_' . $interval_key);
-            delete_option('cycle_colours_schedule_array');
         }
     }
 }

@@ -87,12 +87,15 @@ add_action('wp_enqueue_scripts', function () {
     }
 });
 
+/**
+ * Display a success message on successful deactivation
+ */
 add_action('admin_notices', function () {
     $deact_message = get_transient('cycle_colours_deactivation_message');
     if (!empty($deact_message)) {
         // Display success message
         echo '<div class="notice notice-success is-dismissible">
-                <p>Plugin deactivated successfully, temp data removed and cron jobs stopped.</p>
+                <p>Plugin deactivated successfully. All data and all scheduled events have been removed. Deleting the plugin will remove the source files so no trace is left that the plugin was ever used..sad but clean.</p>
               </div>';
         // Delete transient to prevent repeated display
         delete_transient('cycle_colours_deactivation_message');
@@ -103,10 +106,38 @@ add_action('admin_notices', function () {
  * Display an error message on deactivation
  */
 add_action('admin_notices', function () {
+    $error = get_option('cycle_colours_deactivation_error');
+    if ($error) {
+        echo '<div class="notice notice-error is-dismissible">';
+        echo '<p><strong>An unexpected error occurred during deactivation:  </strong> ' . esc_html($error) . '</p>';
+        echo '</div>';
+        delete_option('cycle_colours_deactivation_error'); // clear after showing
+    }
+});
+
+/**
+ * Display a success message on successful uninstallation
+ */
+add_action('admin_notices', function () {
+    $uninstall_message = get_transient('cycle_colours_uninstall_message');
+    if (!empty($uninstall_message)) {
+        // Display success message
+        echo '<div class="notice notice-success is-dismissible">
+                <p>Plugin uninstalled successfully. All data and all scheduled events have been removed. No trace is left that the plugin was ever used..sad but clean.</p>
+              </div>';
+        // Delete transient to prevent repeated display
+        delete_transient('cycle_colours_uninstall_message');
+    }
+});
+
+/**
+ * Display an error message on uninstallation
+ */
+add_action('admin_notices', function () {
     $error = get_option('cycle_colours_uninstall_error');
     if ($error) {
         echo '<div class="notice notice-error is-dismissible">';
-        echo '<p><strong>Plugin Uninstall Error:</strong> ' . esc_html($error) . '</p>';
+        echo '<p><strong>An unexpected error occurred during uninstallation:  </strong> ' . esc_html($error) . '</p>';
         echo '</div>';
         delete_option('cycle_colours_uninstall_error'); // clear after showing
     }
