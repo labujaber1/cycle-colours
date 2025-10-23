@@ -30,7 +30,6 @@ function cycle_colours_schedule_event_palettes()
  */
 function cycle_colours_schedule_events_by_interval($interval_groups)
 {
-    error_log('Scheduling events for intervals: ' . implode(', ', array_keys($interval_groups)) . '.' . PHP_EOL, 3, error_log_file()); // For debugging purposes
     $schedule_array = [];
     foreach ($interval_groups as $interval => $group) {
         if ($interval === '0') continue; // Skip disabled intervals
@@ -56,17 +55,27 @@ function cycle_colours_intervals_housekeeping()
     $div_array = get_option('cycle_colours_div_array', []);
     $interval_groups = cycle_colours_group_divs_by_interval($div_array);
     $active_intervals = array_keys($interval_groups);
-
+    if (empty($active_intervals)) {
+        return;
+    }
     // Get all possible intervals from cron_schedules
     $schedules = apply_filters('cron_schedules', []);
+    if (empty($schedules)) {
+        return;
+    }
     foreach ($schedules as $interval_key => $interval_data) {
-        //if ($interval_key === '0') continue; // Skip disabled
+        //if ($interval_key === '0') continue; // don'tSkip disabled
         $hook = 'cycle_colours_div_task_' . $interval_key;
         // If this interval is not active, clear its schedule and options
         if (!in_array($interval_key, $active_intervals, true)) {
             wp_clear_scheduled_hook($hook);
-            delete_option('cycle_colours_divs_interval_' . $interval_key);
-            delete_option('cycle_colours_inline_css_' . $interval_key);
+            if (get_option('cycle_colours_divs_interval_' . $interval_key) !== false) {
+                delete_option('cycle_colours_divs_interval_' . $interval_key);
+            }
+
+            if (get_option('cycle_colours_inline_css_' . $interval_key) !== false) {
+                delete_option('cycle_colours_inline_css_' . $interval_key);
+            }
         }
     }
 }
@@ -82,7 +91,6 @@ function cycle_colours_intervals_housekeeping()
  */
 function cycle_colours_rerun_scheduled_events()
 {
-    Error_log('Rerunning scheduled events for divs.' . PHP_EOL, 3, error_log_file()); // For debugging purposes
     $div_array = get_option('cycle_colours_div_array', []);
     $interval_groups = cycle_colours_group_divs_by_interval($div_array);
     cycle_colours_save_interval_groups($interval_groups);

@@ -5,7 +5,6 @@ if (isset($_POST['submit_div'], $_POST['cycle_colours_save_div_nonce']) && wp_ve
     // and store them in an array.
     // Use the JSON array from the hidden input
     $timestamp = date('d-m-Y H:i:s', time()); // Get the current date and time
-    error_log('Processing div form submission. - ' . $timestamp . '.' . PHP_EOL, 3, error_log_file()); // For debugging purposes
     $custom_colours_array = [];
     if (!empty($_POST['custom_colours_json'])) {
         $colours_array = sanitize_text_field(wp_unslash($_POST['custom_colours_json']));
@@ -29,7 +28,6 @@ if (isset($_POST['submit_div'], $_POST['cycle_colours_save_div_nonce']) && wp_ve
     } else {
         if (isset($_POST['div_interval'], $_POST['div_class'], $_POST['div_style'])) {
 
-            error_log('Saving div settings to database in div handler.' . PHP_EOL, 3, error_log_file()); // For debugging purposes
             // Prepare vars for div_array update function
             $div_class = sanitize_text_field(wp_unslash($_POST['div_class']));
             $div_style = sanitize_text_field(wp_unslash($_POST['div_style']));

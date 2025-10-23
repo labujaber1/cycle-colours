@@ -13,7 +13,19 @@ define('CYCLE_COLOURS_DEBUG', true); // Set to false in production
  * @package CycleColours
  */
 // Admin logic functions for the plugin
-register_deactivation_hook(__FILE__, 'cycle_colours_deactivate_plugin');
+register_deactivation_hook(__FILE__, 'cycle_colours_deactivate_plugin_wrapper');
+
+function cycle_colours_deactivate_plugin_wrapper()
+{
+    $helper = plugin_dir_path(__FILE__) . 'helpers/deactivate.php';
+    if (file_exists($helper)) {
+        require_once $helper;
+    }
+    if (function_exists('cycle_colours_deactivate_plugin')) {
+        cycle_colours_deactivate_plugin();
+    }
+}
+
 
 if (!defined('ABSPATH')) {
     exit;
