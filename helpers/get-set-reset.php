@@ -1,30 +1,15 @@
 <?php
 
-/**
- * Plugin Deactivation
- */
-/**
- * Called when the plugin is deactivated.
- *
- * Clears all settings related to palettes, the scheduled event for palettes and
- * all divs, and runs the housekeeping function for intervals.
- *
- * @return void
- */
-function cycle_colours_deactivate_plugin()
+/*function cycle_colours_deactivate_plugin()
 {
-    try {
-        // remove all data saved in options 
-        cycle_colours_remove_all_options();
-        // stop all cron jobs
-        cycle_colours_stop_cron_jobs();
-        cycle_colours_intervals_housekeeping();
-        set_transient('cycle_colours_deactivation_message', 'cycle-colours', 60);
-    } catch (Exception $e) {
-        //display error message
-        set_transient('cycle_colours_deactivation_error', $e->getMessage(), 60);
-    }
-}
+
+    // stop all cron jobs need options to work so must run prior to option deletion
+    cycle_colours_stop_cron_jobs();
+    cycle_colours_intervals_housekeeping();
+    // remove all data saved in options 
+    cycle_colours_remove_all_options();
+    set_transient('cycle_colours_deactivation_message', 'cycle-colours', 60);
+}*/
 
 /**
  * Stops all scheduled cron jobs related to the plugin.
@@ -36,17 +21,14 @@ function cycle_colours_deactivate_plugin()
  */
 function cycle_colours_stop_cron_jobs()
 {
-    try {
-        wp_clear_scheduled_hook('cycle_colours_palettes_task');
-        $sched_arr = get_option('cycle_colours_schedule_array', []);
-        if (empty($sched_arr)) return false;
-        foreach ($sched_arr as $interval => $hook) {
-            wp_clear_scheduled_hook($hook);
-        }
-        return true;
-    } catch (Exception $e) {
-        throw new Exception('Error stopping cron jobs: ' . $e->getMessage());
+
+    wp_clear_scheduled_hook('cycle_colours_palettes_task');
+    $sched_arr = get_option('cycle_colours_schedule_array', []);
+    if (empty($sched_arr)) return false;
+    foreach ($sched_arr as $interval => $hook) {
+        wp_clear_scheduled_hook($hook);
     }
+    return true;
 }
 
 /**
