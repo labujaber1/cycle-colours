@@ -12,7 +12,6 @@
  */
 function cycle_colours_deactivate_plugin()
 {
-
     $errors = [];
 
     // Stop cron jobs (defensive: ensure function exists and capture errors)
