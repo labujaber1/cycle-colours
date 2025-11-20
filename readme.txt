@@ -1,6 +1,5 @@
 === Cycle Colour ===
 Contributors: Lawrence Abu-Jaber
-Donate link: https://github.com/labujaber1
 Tags: colour, palette, cycle, background, styles
 Requires at least: 5.0
 Tested up to: 6.3
@@ -101,6 +100,10 @@ scheduling functions are used.
 
 = 1.0.0 =
 * Initial release.
+
+== Feedback ==
+
+Is always welcomed via github discussions
 
 == Upgrade Notice ==
 

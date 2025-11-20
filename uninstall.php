@@ -38,6 +38,3 @@ delete_option('cycle_colours_parent_files');
 delete_option('cycle_colours_style_files');
 delete_option('cycle_colours_style_files_data');
 delete_option('cycle_colours_toggle');
-
-// then sets message to show on plugins page after deactivation which would have been removed so doesn't get displayed..doh!
-set_transient('cycle_colours_deactivation_message', 'cycle-colours', 120);

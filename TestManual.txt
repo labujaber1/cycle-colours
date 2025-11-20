@@ -1,0 +1,31 @@
+
+Manual testing 
+
+- Delete palettes - passed 18/9
+- Add palettes - passed 18/9
+- Add div - passed 18/9
+- Delete class - class deleted - passed 18/9
+                 - css inline changed - passed 18/9
+                 - schedule event amended - passed 18/9
+                 - test site changed - 18/9
+- Delete class/style - class/style deleted - passed 18/9
+                     - class/style css inline changed - failed 18/9 fixed passed 18/9
+                     #rerun schedule function out of place in delete-handler.php
+                     - schedule event amended - passed 18/9 
+                     - test site changed - passed 18/9
+- Stop schedule event - event interval set to 0 - passed 18/9
+                     - check in edit schedule - passed 18/9
+- Delete all classes - all classes removed - passed 18/9
+                     - css inline removed - passed 18/9
+                     - schedule events removed - passed 18/9
+                     - test site changed - passed 18/9
+- Edit schedule - interval changed palettes - passed 18/9
+                - schedule amended - passed 18/9
+                - test site changed - passed 18/9
+                - interval changed divs - passed 18/9
+                - css inline groups altered - passed 18/9
+                - schedule amended - passed 18/9
+                - check date time - passed 18/9
+                - check info section - passed 18/9
+                - test site changed - passed 18/9
+Deactivation and uninstall - tested - passed 20/11 No transient message displayed
