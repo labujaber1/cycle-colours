@@ -21,7 +21,7 @@ the plugin through the WordPress plugins screen directly.
 
 == Further description ==
 
-Cycle Colour is a WordPress plugin that allows administrators to manage and set a schedule to cycle through 
+Cycle Colours is a WordPress plugin that allows administrators to manage and set a schedule to cycle through 
 selected style files containing colour palettes, or colours for any div with a class or id. All settings and controls are 
 available from a dedicated admin page — no block insertion or frontend editing required. A testing schedule of
 1 minute is available but not recommended for live sites. Changes are seen on a page load as the styles are merged

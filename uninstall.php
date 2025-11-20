@@ -2,7 +2,6 @@
 
 if (! defined('WP_UNINSTALL_PLUGIN')) {
     die;
-    die;
 }
 
 // Remove options data, no tables created. 
